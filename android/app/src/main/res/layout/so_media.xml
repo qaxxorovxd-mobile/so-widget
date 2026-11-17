@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Native media widget: one bitmap + three independent tap areas positioned from code via padding. -->
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/np_root"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:id="@+id/np_image"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:contentDescription="@string/so_widget_desc"
+        android:scaleType="fitXY" />
+
+    <FrameLayout
+        android:id="@+id/np_c_prev"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <FrameLayout
+            android:id="@+id/np_prev"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:contentDescription="Previous" />
+    </FrameLayout>
+
+    <FrameLayout
+        android:id="@+id/np_c_toggle"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <FrameLayout
+            android:id="@+id/np_toggle"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:contentDescription="Play or pause" />
+    </FrameLayout>
+
+    <FrameLayout
+        android:id="@+id/np_c_next"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <FrameLayout
+            android:id="@+id/np_next"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:contentDescription="Next" />
+    </FrameLayout>
+</FrameLayout>

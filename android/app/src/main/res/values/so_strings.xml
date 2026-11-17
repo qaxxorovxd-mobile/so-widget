@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="so_widget_desc">So Widget</string>
+    <string name="so_widget_choose">Tap to choose a widget</string>
+    <string name="so_widget_empty">Open So Widget to finish setup</string>
+    <string name="so_small_desc">Small So Widget: any of 56 widgets, incl. live media</string>
+    <string name="so_medium_desc">Medium So Widget: wide layouts like Chrono and World Clock</string>
+    <string name="so_large_desc">Large So Widget: the full experience</string>
+    <string name="so_pick_title">Choose a widget</string>
+    <string name="so_pick_subtitle">Style it later in So Widget · Studio</string>
+    <string name="so_pick_first_run">Open So Widget once to load the widget list.</string>
+    <string name="so_pick_open">Open So Widget</string>
+</resources>
