@@ -15,6 +15,7 @@ import 'gallery.dart';
 import 'info.dart';
 import 'permissions.dart';
 import 'studio.dart';
+import 'wallpapers.dart';
 
 final soNavKey = GlobalKey<NavigatorState>();
 
@@ -98,7 +99,12 @@ class _RootShellState extends State<RootShell> with WidgetsBindingObserver {
           constraints: const BoxConstraints(maxWidth: 720),
           child: IndexedStack(
             index: _tab,
-            children: const [GalleryPage(), StudioPage(), InfoPage()],
+            children: [
+              const GalleryPage(),
+              WallpapersPage(active: _tab == 1),
+              const StudioPage(),
+              const InfoPage(),
+            ],
           ),
         ),
       ),
@@ -120,6 +126,10 @@ class _RootShellState extends State<RootShell> with WidgetsBindingObserver {
             BottomNavigationBarItem(
               icon: Icon(CupertinoIcons.square_grid_2x2_fill),
               label: 'Widgets',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(CupertinoIcons.photo_fill_on_rectangle_fill),
+              label: 'Wallpapers',
             ),
             BottomNavigationBarItem(
               icon: Icon(CupertinoIcons.paintbrush_fill),

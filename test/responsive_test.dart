@@ -13,6 +13,7 @@ import 'package:so_widget/screens/gallery.dart';
 import 'package:so_widget/screens/info.dart';
 import 'package:so_widget/screens/picker.dart';
 import 'package:so_widget/screens/studio.dart';
+import 'package:so_widget/screens/wallpapers.dart';
 import 'package:so_widget/ui/forms.dart';
 import 'package:so_widget/ui/kit.dart';
 import 'package:so_widget/ui/style_editor.dart';
@@ -114,6 +115,7 @@ void main() {
           const GalleryPage(),
           const StudioPage(),
           const InfoPage(),
+          const WallpapersPage(active: false),
           DetailPage(allWidgets.first),
         ]) {
           await mount(tester, page, size, textScale: scale);

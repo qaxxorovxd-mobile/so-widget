@@ -8,7 +8,7 @@ import '../ui/forms.dart';
 import 'permissions.dart';
 import '../widgets/productivity.dart' show openUrl;
 
-const kVersion = '1.1.0';
+const kVersion = '1.2.0';
 
 class InfoPage extends StatelessWidget {
   const InfoPage({super.key});
@@ -126,7 +126,31 @@ class InfoPage extends StatelessWidget {
             RowItem(title: 'ISS position', value: 'WhereTheISS'),
             RowItem(title: 'News', value: 'Hacker News'),
             RowItem(title: 'Translation', value: 'MyMemory'),
-            RowItem(title: 'Wallpapers', value: 'Lorem Picsum'),
+            RowItem(title: 'Wallpaper library', value: 'Wallhaven'),
+            RowItem(title: 'Photo widget samples', value: 'Lorem Picsum'),
+          ],
+        ),
+        Section(
+          title: 'Wallpapers by Wallhaven',
+          footer: 'Wallpapers are shared by the Wallhaven community and stay the property of their creators. '
+              'So Widget is not affiliated with Wallhaven, does not host the images, and shows only safe-for-work content. '
+              'Every wallpaper keeps its uploader, source and a link back. Use them as personal wallpapers only.',
+          children: [
+            for (final (icon, title, path) in const [
+              (CupertinoIcons.globe, 'Wallhaven', ''),
+              (CupertinoIcons.chevron_left_slash_chevron_right, 'API documentation', '/help/api'),
+              (CupertinoIcons.doc_text_fill, 'Terms of Service', '/terms'),
+              (CupertinoIcons.hand_raised_fill, 'Privacy Policy', '/privacy'),
+              (CupertinoIcons.shield_lefthalf_fill, 'Copyright & DMCA', '/dmca'),
+              (CupertinoIcons.list_bullet, 'Upload rules', '/help/rules'),
+            ])
+              RowItem(
+                icon: icon,
+                iconColor: const Color(0xFF3A3A3C),
+                title: title,
+                value: path.isEmpty ? 'wallhaven.cc' : null,
+                onTap: () => openUrl('https://wallhaven.cc$path'),
+              ),
           ],
         ),
         Section(

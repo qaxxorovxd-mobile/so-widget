@@ -392,7 +392,7 @@ class _SizesStrip extends StatelessWidget {
                 style: TextStyle(fontSize: 12.5, color: K.label3, height: 1.3)),
           ),
           SizedBox(
-            height: 150,
+            height: 128 + MediaQuery.textScalerOf(context).scale(12) * 1.4,
             child: ListView.separated(
               scrollDirection: Axis.horizontal,
               padding: const EdgeInsets.symmetric(horizontal: 16),

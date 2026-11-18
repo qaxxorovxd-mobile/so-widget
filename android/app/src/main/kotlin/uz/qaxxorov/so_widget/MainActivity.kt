@@ -1,10 +1,43 @@
 package uz.qaxxorov.so_widget
 
+import android.content.Context
 import io.flutter.embedding.android.FlutterActivity
 import io.flutter.embedding.engine.FlutterEngine
+import io.flutter.embedding.engine.FlutterEngineCache
+import io.flutter.embedding.engine.dart.DartExecutor
 import io.flutter.plugin.common.MethodChannel
 
 class MainActivity : FlutterActivity() {
+    companion object {
+        private const val ENGINE = "so_main"
+    }
+
+    /**
+     * Keeps one engine across activity re-creations. Setting a wallpaper on Android 12+ changes the
+     * Material You palette, which makes the system re-create the activity; with a cached engine the
+     * app keeps its screens and state instead of restarting.
+     */
+    override fun provideFlutterEngine(context: Context): FlutterEngine {
+        val cache = FlutterEngineCache.getInstance()
+        cache.get(ENGINE)?.let { return it }
+        val engine = FlutterEngine(context.applicationContext)
+        engine.dartExecutor.executeDartEntrypoint(DartExecutor.DartEntrypoint.createDefault())
+        cache.put(ENGINE, engine)
+        return engine
+    }
+
+    override fun shouldDestroyEngineWithHost(): Boolean = false
+
+    override fun onDestroy() {
+        val closing = isFinishing && !isChangingConfigurations
+        super.onDestroy()
+        if (closing) {
+            val cache = FlutterEngineCache.getInstance()
+            cache.get(ENGINE)?.destroy()
+            cache.remove(ENGINE)
+        }
+    }
+
     private var detachMedia: (() -> Unit)? = null
     private var detachHome: (() -> Unit)? = null
     private var detachDevice: (() -> Unit)? = null
@@ -15,6 +48,7 @@ class MainActivity : FlutterActivity() {
         detachHome = SoHome.attach(applicationContext, flutterEngine.dartExecutor.binaryMessenger, listen = true)
         detachDevice = SoDevices.attach(applicationContext, flutterEngine.dartExecutor.binaryMessenger)
         SoDevices.updateAll(this)
+        SoWallpaper.attach(this, flutterEngine.dartExecutor.binaryMessenger)
         // Some phones (Xiaomi, Oppo…) unbind the listener after the app is killed; ask the system to rebind it.
         try {
             if (SoMedia.allowed(this) && android.os.Build.VERSION.SDK_INT >= 24) {
