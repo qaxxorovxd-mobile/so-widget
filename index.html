@@ -1,432 +1,842 @@
 <!doctype html>
 <html lang="en">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>So Widget — Premium home-screen widgets for Android</title>
-<meta name="description" content="60 premium home-screen widgets for Android with one shared style, colors that match your wallpaper, live media and 4K wallpapers. By qaxxorov.uz.">
-<meta name="theme-color" content="#000000">
-<meta name="color-scheme" content="dark">
-<link rel="canonical" href="https://qaxxorovxd-mobile.github.io/so-widget/">
-<link rel="icon" type="image/webp" href="assets/logo.webp">
-<link rel="apple-touch-icon" href="assets/logo.webp">
-<meta property="og:type" content="website">
-<meta property="og:title" content="So Widget — Your home screen, designed in one piece">
-<meta property="og:description" content="60 premium widgets for Android. One style, colors from your wallpaper, live media and 4K wallpapers.">
-<meta property="og:url" content="https://qaxxorovxd-mobile.github.io/so-widget/">
-<meta property="og:image" content="https://qaxxorovxd-mobile.github.io/so-widget/assets/og.jpg">
-<meta name="twitter:card" content="summary_large_image">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-<script type="application/ld+json">
-{"@context":"https://schema.org","@type":"SoftwareApplication","name":"So Widget","operatingSystem":"Android 7.0+","applicationCategory":"PersonalizationApplication","softwareVersion":"1.3.0","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"author":{"@type":"Person","name":"qaxxorov.uz","url":"https://qaxxorov.uz"}}
-</script>
-<style>
-:root{
-  --bg:#000;--bg2:#0b0b0d;--card:#141416;--card2:#1c1c1e;--line:rgba(255,255,255,.09);
-  --text:#f5f5f7;--text2:rgba(235,235,245,.62);--text3:rgba(235,235,245,.38);
-  --accent:#f5f5f7;--grad1:#7c5cff;--grad2:#ff6b9a;--grad3:#4da3ff;
-  --radius:28px;--max:1120px;
-}
-*{box-sizing:border-box;margin:0;padding:0}
-html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
-body{background:var(--bg);color:var(--text);font-family:Inter,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;line-height:1.5;-webkit-font-smoothing:antialiased;overflow-x:hidden}
-img{display:block;max-width:100%;height:auto}
-a{color:inherit;text-decoration:none}
-.wrap{max-width:var(--max);margin:0 auto;padding:0 24px}
-@media (max-width:600px){.wrap{padding:0 16px}}
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, viewport-fit=cover"
+    />
+    <title>So Widget — A little more you.</title>
+    <meta
+      name="description"
+      content="Make your Android home screen feel like you. Explore 60 widgets, 10 shared themes, live music and colors that follow your wallpaper. Free, with no ads."
+    />
+    <meta name="theme-color" content="#f5f5ef" />
+    <meta name="color-scheme" content="light" />
+    <link
+      rel="canonical"
+      href="https://qaxxorovxd-mobile.github.io/so-widget/"
+    />
+    <link rel="icon" type="image/webp" href="assets/logo.webp" />
+    <link rel="apple-touch-icon" href="assets/logo.webp" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="So Widget — A little more you." />
+    <meta
+      property="og:description"
+      content="60 widgets. One shared style. A home screen that feels like you. Free on Android."
+    />
+    <meta
+      property="og:url"
+      content="https://qaxxorovxd-mobile.github.io/so-widget/"
+    />
+    <meta
+      property="og:image"
+      content="https://qaxxorovxd-mobile.github.io/so-widget/assets/og.jpg"
+    />
+    <meta name="twitter:card" content="summary_large_image" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;450;500;550;600;650;700&family=Manrope:wght@400;500;600;650;700;750;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+    <script src="script.js" defer></script>
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "SoftwareApplication",
+        "name": "So Widget",
+        "operatingSystem": "Android 7.0+",
+        "applicationCategory": "PersonalizationApplication",
+        "softwareVersion": "1.3.0",
+        "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+        "author": {
+          "@type": "Person",
+          "name": "qaxxorov.uz",
+          "url": "https://qaxxorov.uz"
+        }
+      }
+    </script>
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+    <svg
+      class="icon-defs"
+      xmlns="http://www.w3.org/2000/svg"
+      aria-hidden="true"
+    >
+      <defs>
+        <symbol id="arrow" viewBox="0 0 24 24">
+          <path d="M5 12h14m-6-6 6 6-6 6" />
+        </symbol>
+        <symbol id="download" viewBox="0 0 24 24">
+          <path d="M12 3v12m-5-5 5 5 5-5M5 16v4h14v-4" />
+        </symbol>
+        <symbol id="spark" viewBox="0 0 24 24">
+          <path d="m12 2 2.7 7.3L22 12l-7.3 2.7L12 22l-2.7-7.3L2 12l7.3-2.7Z" />
+        </symbol>
+        <symbol id="sun" viewBox="0 0 24 24">
+          <circle cx="12" cy="12" r="4" />
+          <path
+            d="M12 1v2m0 18v2M1 12h2m18 0h2M4.2 4.2l1.4 1.4m12.8 12.8 1.4 1.4m0-15.6-1.4 1.4M5.6 18.4l-1.4 1.4"
+          />
+        </symbol>
+        <symbol id="grid" viewBox="0 0 24 24">
+          <rect x="3" y="3" width="7" height="7" rx="2" />
+          <rect x="14" y="3" width="7" height="7" rx="2" />
+          <rect x="3" y="14" width="7" height="7" rx="2" />
+          <rect x="14" y="14" width="7" height="7" rx="2" />
+        </symbol>
+        <symbol id="shield" viewBox="0 0 24 24">
+          <path d="m12 3 8 3v6c0 5-8 9-8 9s-8-4-8-9V6Z" />
+          <path d="m8 12 3 3 5-6" />
+        </symbol>
+        <symbol id="android" viewBox="0 0 24 24">
+          <path d="m7 7-2-3m12 3 2-3M3 18a9 9 0 0 1 18 0Z" />
+          <path d="M8 13h.01M16 13h.01" stroke-width="3" />
+        </symbol>
+      </defs>
+    </svg>
 
-/* nav */
-.nav{position:sticky;top:0;z-index:50;backdrop-filter:saturate(180%) blur(20px);-webkit-backdrop-filter:saturate(180%) blur(20px);background:rgba(0,0,0,.72);border-bottom:1px solid var(--line)}
-.nav .wrap{display:flex;align-items:center;gap:28px;height:60px}
-.brand{display:flex;align-items:center;gap:10px;font-weight:700;letter-spacing:-.02em}
-.brand img{width:30px;height:30px;border-radius:8px}
-.nav ul{display:flex;gap:24px;list-style:none;margin-left:auto;font-size:14px;color:var(--text2)}
-.nav ul a:hover{color:var(--text)}
-.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;height:44px;padding:0 20px;border-radius:999px;font-weight:600;font-size:15px;transition:transform .15s ease,background .2s ease,opacity .2s}
-.btn:active{transform:scale(.97)}
-.btn-primary{background:var(--text);color:#000}
-.btn-primary:hover{background:#fff}
-.btn-ghost{border:1px solid var(--line);color:var(--text);background:rgba(255,255,255,.04)}
-.btn-ghost:hover{background:rgba(255,255,255,.09)}
-.btn-sm{height:36px;padding:0 16px;font-size:14px}
-.btn svg{width:18px;height:18px}
-@media (max-width:760px){.nav ul{display:none}.nav .btn-sm{margin-left:auto}}
-
-/* hero */
-.hero{position:relative;padding:96px 0 40px;text-align:center;overflow:hidden}
-.glow{position:absolute;inset:-20% -10% auto;height:720px;pointer-events:none;filter:blur(90px);opacity:.55;
-  background:radial-gradient(40% 50% at 30% 40%,var(--g1,#7c5cff),transparent 70%),radial-gradient(40% 50% at 70% 35%,var(--g2,#ff6b9a),transparent 70%),radial-gradient(35% 45% at 50% 70%,var(--g3,#4da3ff),transparent 70%);
-  transition:background 1.2s ease}
-.pill{display:inline-flex;align-items:center;gap:8px;padding:6px 14px;border-radius:999px;border:1px solid var(--line);background:rgba(255,255,255,.05);font-size:13px;color:var(--text2);position:relative}
-.pill b{color:var(--text);font-weight:600}
-.dot{width:7px;height:7px;border-radius:50%;background:#30d158;box-shadow:0 0 10px #30d158}
-h1{position:relative;font-size:clamp(40px,7.4vw,84px);line-height:1.02;letter-spacing:-.045em;font-weight:800;margin:22px auto 18px;max-width:900px}
-.grad{background:linear-gradient(100deg,#fff 10%,#d9ccff 45%,#ffc2d6 75%,#fff);-webkit-background-clip:text;background-clip:text;color:transparent}
-.lead{position:relative;font-size:clamp(17px,2.2vw,21px);color:var(--text2);max-width:640px;margin:0 auto 34px}
-.cta{position:relative;display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
-.meta{position:relative;margin-top:16px;font-size:13px;color:var(--text3)}
-
-/* phones */
-.phones{position:relative;display:flex;justify-content:center;align-items:flex-end;gap:0;margin:72px auto 0;height:600px;max-width:960px}
-.phone{position:relative;width:270px;aspect-ratio:9/20;border-radius:44px;padding:10px;background:linear-gradient(160deg,#2a2a2e,#0c0c0e);box-shadow:0 0 0 1px rgba(255,255,255,.08) inset,0 40px 80px -20px rgba(0,0,0,.9),0 0 0 1px #000;flex:none}
-.phone img{width:100%;height:100%;object-fit:cover;border-radius:35px;background:#000}
-.phone.l{transform:translateX(60px) rotate(-8deg) scale(.86);transform-origin:bottom center;z-index:1;opacity:.92}
-.phone.r{transform:translateX(-60px) rotate(8deg) scale(.86);transform-origin:bottom center;z-index:1;opacity:.92}
-.phone.c{z-index:2}
-@media (max-width:760px){.phones{height:auto;margin-top:48px}.phone{width:58vw;max-width:270px}.phone.l,.phone.r{display:none}}
-
-/* stats */
-.stats{display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid var(--line);border-bottom:1px solid var(--line);margin-top:80px}
-.stat{padding:30px 16px;text-align:center;border-right:1px solid var(--line)}
-.stat:last-child{border-right:0}
-.stat b{display:block;font-size:clamp(28px,4vw,44px);font-weight:800;letter-spacing:-.04em}
-.stat span{font-size:13px;color:var(--text2)}
-@media (max-width:600px){.stats{grid-template-columns:repeat(2,1fr)}.stat:nth-child(2){border-right:0}.stat:nth-child(-n+2){border-bottom:1px solid var(--line)}}
-
-section{padding:110px 0}
-@media (max-width:600px){section{padding:72px 0}}
-.eyebrow{font-size:13px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--text3);margin-bottom:14px}
-h2{font-size:clamp(32px,5vw,56px);line-height:1.05;letter-spacing:-.04em;font-weight:800;max-width:780px}
-.sub{font-size:18px;color:var(--text2);max-width:620px;margin-top:16px}
-
-/* features */
-.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:56px}
-.card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:28px;position:relative;overflow:hidden}
-.card .ic{width:44px;height:44px;border-radius:12px;display:grid;place-items:center;margin-bottom:18px}
-.card .ic svg{width:22px;height:22px}
-.card h3{font-size:19px;letter-spacing:-.02em;margin-bottom:8px}
-.card p{font-size:15px;color:var(--text2)}
-.card.wide{grid-column:span 2}
-@media (max-width:900px){.grid{grid-template-columns:1fr 1fr}.card.wide{grid-column:span 2}}
-@media (max-width:600px){.grid{grid-template-columns:1fr}.card.wide{grid-column:auto}}
-
-/* collections */
-.cols{display:flex;flex-wrap:wrap;gap:10px;margin-top:40px}
-.chip{padding:10px 16px;border-radius:999px;background:var(--card);border:1px solid var(--line);font-size:14px;color:var(--text2)}
-.chip b{color:var(--text);font-weight:600;margin-right:6px}
-
-/* split */
-.split{display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:center}
-.split .phone{margin:0 auto}
-@media (max-width:860px){.split{grid-template-columns:1fr;gap:48px}}
-.list{list-style:none;margin-top:28px;display:grid;gap:14px}
-.list li{display:flex;gap:12px;font-size:16px;color:var(--text2)}
-.list li::before{content:"";flex:none;width:20px;height:20px;margin-top:2px;border-radius:50%;background:#30d158 url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3E%3Cpath d='M5.5 10.5l3 3 6-7' fill='none' stroke='%23000' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center/14px no-repeat}
-.list b{color:var(--text);font-weight:600}
-
-/* wallpaper match demo */
-.match{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:22px;max-width:440px;margin:0 auto;width:100%}
-.wall{height:220px;border-radius:20px;position:relative;overflow:hidden;transition:background 1s ease}
-.wall::after{content:"";position:absolute;inset:0;background:radial-gradient(80% 60% at 70% 20%,rgba(255,255,255,.18),transparent 60%)}
-.wall .w{position:absolute;left:16px;bottom:16px;width:132px;height:132px;border-radius:26px;padding:14px;display:flex;flex-direction:column;justify-content:space-between;transition:all .8s ease;z-index:1;border:1px solid rgba(255,255,255,.12)}
-.wall .w .t{font-size:34px;font-weight:700;letter-spacing:-.04em;line-height:1}
-.wall .w .bar{height:4px;border-radius:2px;width:70%}
-.wall .w .d{font-size:12px;opacity:.7}
-.mh{display:flex;align-items:center;gap:10px;margin:18px 4px 14px}
-.mh .dots{display:flex}
-.mh .dots i{width:18px;height:18px;border-radius:50%;border:2px solid var(--card);margin-left:-6px;transition:background 1s}
-.mh .dots i:first-child{margin-left:0}
-.mh b{font-size:15px}
-.mh small{display:block;font-size:12.5px;color:var(--text2)}
-.sw{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
-.sw button{appearance:none;border:0;background:none;color:var(--text2);font:inherit;font-size:12px;cursor:pointer}
-.sw .s{aspect-ratio:1;border-radius:14px;padding:8px;display:flex;flex-direction:column;justify-content:space-between;border:1px solid rgba(255,255,255,.12);margin-bottom:6px;transition:all .6s ease;text-align:left}
-.sw .s i{width:9px;height:9px;border-radius:50%;display:block}
-.sw .s span{font-size:15px;font-weight:600}
-.sw button[aria-pressed=true] .s{outline:2px solid #fff;outline-offset:-2px}
-
-/* gallery */
-.shots{display:flex;gap:18px;overflow-x:auto;scroll-snap-type:x mandatory;padding:8px max(24px,calc((100vw - var(--max))/2 + 24px)) 24px;scroll-padding:0 24px;margin:48px 0 0;scrollbar-width:none}
-.shots::-webkit-scrollbar{display:none}
-.shots figure{flex:none;width:240px;scroll-snap-align:center}
-.shots img{border-radius:28px;border:1px solid var(--line);aspect-ratio:9/20;object-fit:cover;width:100%}
-.shots figcaption{font-size:13px;color:var(--text2);margin-top:10px;text-align:center}
-
-/* steps */
-.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:48px;counter-reset:s}
-.step{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:28px;counter-increment:s}
-.step::before{content:counter(s);display:grid;place-items:center;width:34px;height:34px;border-radius:50%;background:var(--text);color:#000;font-weight:700;margin-bottom:16px}
-.step h3{font-size:18px;margin-bottom:6px}
-.step p{color:var(--text2);font-size:15px}
-@media (max-width:760px){.steps{grid-template-columns:1fr}}
-
-/* faq */
-.faq{margin-top:40px;border-top:1px solid var(--line)}
-details{border-bottom:1px solid var(--line);padding:22px 0}
-summary{cursor:pointer;list-style:none;font-size:18px;font-weight:600;display:flex;justify-content:space-between;gap:16px}
-summary::-webkit-details-marker{display:none}
-summary::after{content:"+";font-weight:400;font-size:24px;line-height:1;color:var(--text2);transition:transform .2s}
-details[open] summary::after{transform:rotate(45deg)}
-details p{color:var(--text2);margin-top:12px;max-width:760px}
-details a{text-decoration:underline;text-underline-offset:3px}
-
-/* final cta */
-.final{text-align:center;position:relative;overflow:hidden;border-radius:40px;border:1px solid var(--line);padding:90px 24px;background:radial-gradient(60% 80% at 50% 0%,rgba(124,92,255,.28),transparent 70%),var(--bg2)}
-.final img{width:88px;height:88px;border-radius:22px;margin:0 auto 24px;box-shadow:0 20px 50px rgba(124,92,255,.35)}
-.final h2{margin:0 auto}
-.final .sub{margin:16px auto 32px}
-
-footer{border-top:1px solid var(--line);padding:48px 0 60px;font-size:13px;color:var(--text3)}
-footer .row{display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap;margin-bottom:24px}
-footer a{color:var(--text2)}
-footer a:hover{color:var(--text)}
-footer nav{display:flex;gap:20px;flex-wrap:wrap}
-footer p{max-width:820px;margin-top:8px}
-
-.reveal{opacity:0;transform:translateY(24px);transition:opacity .8s ease,transform .8s ease}
-.reveal.in{opacity:1;transform:none}
-@media (prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}.reveal{opacity:1;transform:none}}
-</style>
-</head>
-<body>
-
-<header class="nav">
-  <div class="wrap">
-    <a class="brand" href="#top"><img src="assets/logo.webp" alt="" width="30" height="30">So Widget</a>
-    <ul>
-      <li><a href="#features">Features</a></li>
-      <li><a href="#studio">Studio</a></li>
-      <li><a href="#wallpapers">Wallpapers</a></li>
-      <li><a href="#faq">FAQ</a></li>
-    </ul>
-    <a class="btn btn-primary btn-sm" href="https://github.com/qaxxorovxd-mobile/so-widget/releases/latest">Download</a>
-  </div>
-</header>
-
-<main id="top">
-  <div class="hero">
-    <div class="glow" id="glow"></div>
-    <div class="wrap">
-      <span class="pill"><span class="dot"></span><b>New in 1.3</b> Colors from your wallpaper</span>
-      <h1>Your home screen,<br><span class="grad">designed in one piece.</span></h1>
-      <p class="lead">60 premium widgets that share one style. Pick a theme and every widget follows. Change your wallpaper and the colors follow too.</p>
-      <div class="cta">
-        <a class="btn btn-primary" href="https://github.com/qaxxorovxd-mobile/so-widget/releases/latest/download/app-arm64-v8a-release.apk">
-          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.6 9.48l1.84-3.18a.38.38 0 00-.66-.38l-1.86 3.22a11.4 11.4 0 00-9.84 0L5.22 5.92a.38.38 0 00-.66.38L6.4 9.48A10.8 10.8 0 001 18h22a10.8 10.8 0 00-5.4-8.52zM7 15.25A1.25 1.25 0 118.25 14 1.25 1.25 0 017 15.25zm10 0A1.25 1.25 0 1118.25 14 1.25 1.25 0 0117 15.25z"/></svg>
-          Download for Android
-        </a>
-        <a class="btn btn-ghost" href="#features">See what's inside</a>
+    <header class="site-header">
+      <div class="wrap nav-row">
+        <a class="brand" href="#top" aria-label="So Widget home"
+          ><img src="assets/logo.webp" width="36" height="36" alt="" /><span
+            >so widget<span class="brand-dot">.</span></span
+          ></a
+        >
+        <nav class="nav-links" id="navigation" aria-label="Main navigation">
+          <a href="#widgets">The widgets</a><a href="#studio">Make it yours</a
+          ><a href="#inside">Inside the app</a><a href="#faq">FAQ</a>
+        </nav>
+        <a
+          class="button button-dark nav-download"
+          href="https://github.com/qaxxorovxd-mobile/so-widget/releases/latest"
+          >Get the app <svg class="icon"><use href="#download" /></svg
+        ></a>
+        <button
+          class="menu-toggle"
+          aria-expanded="false"
+          aria-controls="navigation"
+          aria-label="Open menu"
+        >
+          <span></span><span></span>
+        </button>
       </div>
-      <p class="meta">Free · Version 1.3.0 · Android 7.0 or newer · No ads, no account</p>
-      <div class="phones">
-        <div class="phone l"><img src="assets/shots/widgets.webp" alt="So Widget gallery with 60 widgets" loading="eager" width="540" height="1200"></div>
-        <div class="phone c"><img src="assets/shots/home-screen.webp" alt="So Widget clock on an Android home screen" loading="eager" width="540" height="1200"></div>
-        <div class="phone r"><img src="assets/shots/studio.webp" alt="Studio themes and colors" loading="eager" width="540" height="1200"></div>
-      </div>
-    </div>
-  </div>
+    </header>
 
-  <div class="wrap">
-    <div class="stats">
-      <div class="stat"><b>60</b><span>widgets</span></div>
-      <div class="stat"><b>7</b><span>collections</span></div>
-      <div class="stat"><b>10</b><span>themes</span></div>
-      <div class="stat"><b>4K</b><span>wallpapers</span></div>
-    </div>
-  </div>
-
-  <section id="features">
-    <div class="wrap">
-      <p class="eyebrow">Features</p>
-      <h2 class="reveal">Everything a home screen needs. Nothing it doesn't.</h2>
-      <div class="grid">
-        <article class="card wide reveal">
-          <div class="ic" style="background:rgba(124,92,255,.18);color:#b99aff"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="3" width="7" height="7" rx="2"/><rect x="14" y="3" width="7" height="7" rx="2"/><rect x="3" y="14" width="7" height="7" rx="2"/><rect x="14" y="14" width="7" height="7" rx="2"/></svg></div>
-          <h3>One style for every widget</h3>
-          <p>Font, colors, corners, outline, glow and glass are shared by every widget. Tap “Apply to all widgets” and your whole home screen updates at once.</p>
-        </article>
-        <article class="card reveal">
-          <div class="ic" style="background:rgba(255,107,154,.16);color:#ff8fb3"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 3a9 9 0 000 18M3 12h18"/></svg></div>
-          <h3>Colors from your wallpaper</h3>
-          <p>Studio reads your wallpaper and suggests four matching color sets.</p>
-        </article>
-        <article class="card reveal">
-          <div class="ic" style="background:rgba(77,163,255,.16);color:#7cbcff"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></svg></div>
-          <h3>Any size</h3>
-          <p>Resize on the home screen from one row up to 4×4. The layout adapts and lines up to the pixel.</p>
-        </article>
-        <article class="card reveal">
-          <div class="ic" style="background:rgba(255,159,10,.16);color:#ffb340"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="2.5"/></svg></div>
-          <h3>Live media</h3>
-          <p>Seven music designs follow Spotify, YouTube Music or any player instantly, with working controls.</p>
-        </article>
-        <article class="card reveal">
-          <div class="ic" style="background:rgba(48,209,88,.16);color:#5be17f"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 3l7 3v6c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V6z"/></svg></div>
-          <h3>Private by design</h3>
-          <p>No account, no ads, no analytics. Notes, tasks and photos stay on your phone.</p>
-        </article>
-      </div>
-      <div class="cols reveal">
-        <span class="chip"><b>Essential</b>10</span>
-        <span class="chip"><b>Media</b>6</span>
-        <span class="chip"><b>Devices</b>4</span>
-        <span class="chip"><b>Productivity</b>10</span>
-        <span class="chip"><b>Digital Life</b>10</span>
-        <span class="chip"><b>Lifestyle</b>10</span>
-        <span class="chip"><b>Creative &amp; Smart</b>10</span>
-      </div>
-    </div>
-  </section>
-
-  <section id="studio" style="background:var(--bg2)">
-    <div class="wrap split">
-      <div>
-        <p class="eyebrow">Studio</p>
-        <h2 class="reveal">Change the wallpaper. The widgets follow.</h2>
-        <p class="sub">Every time your wallpaper changes, the top of Studio shows widget colors made from it. One tap applies them everywhere. Your text size, outline and corners stay exactly as you set them.</p>
-        <ul class="list">
-          <li><span><b>10 themes</b>: Graphite, Midnight, Paper, Mist, Ember, Ocean, Rosé, Mono, Amethyst, Sand</span></li>
-          <li><span><b>iOS-like fonts</b>: Inter, Geist, Nunito, Newsreader, Geist Mono and more</span></li>
-          <li><span><b>Fine control</b>: weight, text size, glow, corners, glass and a shared outline</span></li>
-        </ul>
-      </div>
-      <div class="match reveal" aria-label="Wallpaper color matching demo">
-        <div class="wall" id="wall">
-          <div class="w" id="ww"><div class="d" id="wd">Tuesday</div><div><div class="t">9:41</div></div><div class="bar" id="wb"></div></div>
+    <main id="main">
+      <section class="hero wrap" id="top" aria-labelledby="hero-title">
+        <div class="hero-copy">
+          <a
+            class="release-pill"
+            href="https://github.com/qaxxorovxd-mobile/so-widget/releases/latest"
+            ><span class="status-dot"></span> A fresh look. Version 1.3
+            <span aria-hidden="true">↗</span></a
+          >
+          <h1 id="hero-title">
+            Your screen.<br />Your style.<br /><span class="hero-emphasis"
+              >So you.<svg viewBox="0 0 340 22" aria-hidden="true">
+                <path
+                  d="M4 14C81 0 220 0 332 9M36 20c100-9 197-9 265-4"
+                /></svg></span
+            ><span class="hero-star" aria-hidden="true">✳</span>
+          </h1>
+          <p class="hero-description">
+            Little things. A whole new feeling.<br />60 beautifully connected
+            widgets that make your Android home screen feel like home.
+          </p>
+          <div class="hero-actions">
+            <a
+              class="button button-dark"
+              href="https://github.com/qaxxorovxd-mobile/so-widget/releases/latest/download/app-arm64-v8a-release.apk"
+              ><svg class="icon"><use href="#android" /></svg> Download for
+              Android <svg class="icon"><use href="#arrow" /></svg></a
+            ><a class="text-link" href="#studio"
+              >Find your look <span aria-hidden="true">↘</span></a
+            >
+          </div>
+          <p class="fine-print">Free to download. No ads. No account.</p>
         </div>
-        <div class="mh">
-          <div class="dots" id="dots"><i></i><i></i><i></i></div>
-          <div><b>New wallpaper</b><small>Pick widget colors that suit it</small></div>
+        <div
+          class="hero-art"
+          aria-label="Illustrative widget previews: clock, weather, music and battery"
+        >
+          <div class="art-orbit orbit-one"></div>
+          <div class="art-orbit orbit-two"></div>
+          <span class="art-caption caption-top"
+            >A little order. A lot of personality.</span
+          >
+          <div class="hero-clock floating">
+            <div class="widget-top">
+              <span>Tuesday, November 17</span><span>↗</span>
+            </div>
+            <div class="clock-digits">
+              09<span class="clock-colon">:</span>41<span class="clock-period"
+                >AM</span
+              >
+            </div>
+            <div class="clock-bottom">
+              <span>Make room for a good day.</span
+              ><svg class="icon"><use href="#spark" /></svg>
+            </div>
+          </div>
+          <div class="hero-weather floating">
+            <div class="weather-top">
+              <span>Tashkent</span><svg class="icon"><use href="#sun" /></svg>
+            </div>
+            <strong>24°<span>↗</span></strong
+            ><span>Nothing but sunshine.</span>
+            <div class="weather-range">
+              <span>H: 26°</span><span>L: 18°</span>
+            </div>
+          </div>
+          <div class="hero-music floating">
+            <div class="record" aria-hidden="true">
+              <div class="record-label">so<br /><em>good.</em></div>
+            </div>
+            <div class="music-copy">
+              <span class="micro-label">YOUR DAILY SOUNDTRACK</span
+              ><strong>In a good place</strong
+              ><span>The slow mornings mix</span>
+              <div class="music-controls">
+                <div class="equalizer" aria-hidden="true">
+                  <i></i><i></i><i></i><i></i><i></i>
+                </div>
+                <button
+                  class="play-toggle"
+                  type="button"
+                  aria-label="Pause music preview animation"
+                  aria-pressed="true"
+                >
+                  <span class="play-glyph" aria-hidden="true">Ⅱ</span>
+                </button>
+              </div>
+            </div>
+          </div>
+          <div class="hero-battery floating">
+            <span class="battery-symbol" aria-hidden="true">ϟ</span>
+            <div>
+              <strong>86<span>%</span></strong
+              ><span>Good to go.</span>
+            </div>
+            <div class="battery-bars" aria-hidden="true">
+              <i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i
+              ><i></i>
+            </div>
+          </div>
+          <span class="art-caption caption-bottom"
+            ><svg class="icon"><use href="#spark" /></svg> Different widgets.
+            Same energy.</span
+          >
+          <span class="demo-caption"
+            >Widget concept previews · sample data</span
+          >
         </div>
-        <div class="sw" id="sw"></div>
-      </div>
-    </div>
-  </section>
+        <div class="hero-footer">
+          <span><span class="status-dot"></span> MADE FOR YOUR EVERYDAY</span
+          ><a href="#widgets"
+            >Scroll to explore <span aria-hidden="true">↓</span></a
+          ><button class="motion-toggle" type="button" aria-pressed="false">
+            Pause motion <span aria-hidden="true">Ⅱ</span>
+          </button>
+        </div>
+      </section>
 
-  <section id="wallpapers">
-    <div class="wrap split">
-      <div class="phone reveal"><img src="assets/shots/media.webp" alt="Media widgets in So Widget" loading="lazy" width="540" height="1200"></div>
-      <div>
-        <p class="eyebrow">Wallpapers by Wallhaven</p>
-        <h2 class="reveal">4K wallpapers, filtered your way.</h2>
-        <p class="sub">Browse phone-shaped wallpapers by vibe (Dark, AMOLED, Minimal, Neon, Space, Nature and more). Then sort, filter by quality, shape, brightness or one of 30 colors.</p>
-        <ul class="list">
-          <li><span><b>Set as wallpaper</b> on home, lock or both, with your own crop</span></li>
-          <li><span><b>Download to gallery</b> with the artist credit kept in the file</span></li>
-          <li><span><b>Fair to artists</b>: SFW only, uploader and source always shown</span></li>
-        </ul>
-      </div>
-    </div>
-  </section>
-
-  <section style="padding-top:0">
-    <div class="wrap">
-      <p class="eyebrow">A closer look</p>
-      <h2 class="reveal">Crafted down to the last pixel.</h2>
-    </div>
-    <div class="shots">
-      <figure><img src="assets/shots/widgets.webp" alt="Widget gallery" loading="lazy" width="540" height="1200"><figcaption>Widget gallery</figcaption></figure>
-      <figure><img src="assets/shots/detail.webp" alt="Vinyl media widget" loading="lazy" width="540" height="1200"><figcaption>Every size</figcaption></figure>
-      <figure><img src="assets/shots/chrono.webp" alt="Chrono clock widget" loading="lazy" width="540" height="1200"><figcaption>Chrono</figcaption></figure>
-      <figure><img src="assets/shots/studio.webp" alt="Studio" loading="lazy" width="540" height="1200"><figcaption>Studio</figcaption></figure>
-      <figure><img src="assets/shots/media.webp" alt="Media collection" loading="lazy" width="540" height="1200"><figcaption>Live media</figcaption></figure>
-      <figure><img src="assets/shots/permissions.webp" alt="Permissions" loading="lazy" width="540" height="1200"><figcaption>Clear permissions</figcaption></figure>
-    </div>
-  </section>
-
-  <section id="install" style="padding-top:40px">
-    <div class="wrap">
-      <p class="eyebrow">Install</p>
-      <h2 class="reveal">Ready in a minute.</h2>
-      <div class="steps">
-        <div class="step reveal"><h3>Download</h3><p>Get <code>app-arm64-v8a-release.apk</code> for most phones, or the universal <code>app-release.apk</code>.</p></div>
-        <div class="step reveal"><h3>Install</h3><p>Open the file and allow installing from this source when Android asks.</p></div>
-        <div class="step reveal"><h3>Add widgets</h3><p>Open any widget in the app and tap “Add widget”, or long-press your home screen and pick So Widget.</p></div>
-      </div>
-    </div>
-  </section>
-
-  <section id="faq" style="padding-top:40px">
-    <div class="wrap">
-      <p class="eyebrow">FAQ</p>
-      <h2>Questions</h2>
-      <div class="faq">
-        <details><summary>Is So Widget free?</summary><p>Yes. No ads, no subscriptions, no account.</p></details>
-        <details><summary>Which phones are supported?</summary><p>Android 7.0 or newer. Wallpaper color suggestions use Android 8.1 or newer; on older phones they come from the last wallpaper you set in the app. iOS is not supported yet.</p></details>
-        <details><summary>Why does it ask for notification access?</summary><p>Only to read the song that is playing so the media widgets can show it. Nothing is stored or sent anywhere.</p></details>
-        <details><summary>Do widgets drain the battery?</summary><p>No. Widgets are drawn once and refreshed about every 5 minutes by Android's own job scheduler. Media widgets update only when the music changes.</p></details>
-        <details><summary>Who owns the wallpapers?</summary><p>Every wallpaper belongs to its original artist and is loaded from <a href="https://wallhaven.cc" rel="noopener">Wallhaven</a>. So Widget does not host images, credits the uploader and is not affiliated with Wallhaven. To report an image, use Wallhaven's <a href="https://wallhaven.cc/dmca" rel="noopener">DMCA page</a>.</p></details>
-      </div>
-    </div>
-  </section>
-
-  <section style="padding-top:20px">
-    <div class="wrap">
-      <div class="final reveal">
-        <img src="assets/logo.webp" alt="So Widget" width="88" height="88">
-        <h2>Make your home screen yours.</h2>
-        <p class="sub">60 widgets, 10 themes, colors from your wallpaper. Free on Android.</p>
-        <div class="cta">
-          <a class="btn btn-primary" href="https://github.com/qaxxorovxd-mobile/so-widget/releases/latest/download/app-arm64-v8a-release.apk">Download for Android</a>
-          <a class="btn btn-ghost" href="https://github.com/qaxxorovxd-mobile/so-widget/releases/latest">All downloads</a>
+      <div class="facts-strip">
+        <div class="wrap facts">
+          <div><strong>60</strong><span>little upgrades</span></div>
+          <div><strong>7</strong><span>curated collections</span></div>
+          <div><strong>10</strong><span>ways to set the mood</span></div>
+          <div><strong>100%</strong><span>your kind of screen</span></div>
         </div>
       </div>
-    </div>
-  </section>
-</main>
 
-<footer>
-  <div class="wrap">
-    <div class="row">
-      <a class="brand" href="#top"><img src="assets/logo.webp" alt="" width="30" height="30">So Widget</a>
-      <nav>
-        <a href="https://github.com/qaxxorovxd-mobile/so-widget/releases/latest">Download</a>
-        <a href="https://github.com/qaxxorovxd-mobile/so-widget">GitHub</a>
-        <a href="https://qaxxorov.uz">qaxxorov.uz</a>
-      </nav>
-    </div>
-    <p>Data from Open-Meteo, CoinGecko, the Central Bank of Uzbekistan, Yahoo Finance and Lorem Picsum. Wallpapers by <a href="https://wallhaven.cc">Wallhaven</a>; each image belongs to its original artist. So Widget is not affiliated with Wallhaven, Google or Apple. Android is a trademark of Google LLC.</p>
-    <p>© 2026 qaxxorov.uz. Designed and developed by <a href="https://qaxxorov.uz">qaxxorov.uz</a>.</p>
-  </div>
-</footer>
+      <section
+        class="section wrap"
+        id="widgets"
+        aria-labelledby="widgets-title"
+      >
+        <div class="section-heading reveal">
+          <div>
+            <p class="eyebrow"><span>01 /</span> THE LITTLE THINGS</p>
+            <h2 id="widgets-title">
+              A place for everything.<br />A look that <em>belongs.</em>
+            </h2>
+          </div>
+          <p>
+            Your next song. Your next idea. A little nudge to drink water. All
+            the things you care about, in one shared design language.
+          </p>
+        </div>
+        <div
+          class="collection-tabs reveal"
+          role="group"
+          aria-label="Widget collections"
+        >
+          <button type="button" data-collection="essential" aria-pressed="true">
+            Essential <sup>10</sup></button
+          ><button type="button" data-collection="media" aria-pressed="false">
+            Media <sup>06</sup></button
+          ><button type="button" data-collection="devices" aria-pressed="false">
+            Devices <sup>04</sup></button
+          ><button
+            type="button"
+            data-collection="productivity"
+            aria-pressed="false"
+          >
+            Productivity <sup>10</sup></button
+          ><button type="button" data-collection="digital" aria-pressed="false">
+            Digital Life <sup>10</sup></button
+          ><button
+            type="button"
+            data-collection="lifestyle"
+            aria-pressed="false"
+          >
+            Lifestyle <sup>10</sup></button
+          ><button
+            type="button"
+            data-collection="creative"
+            aria-pressed="false"
+          >
+            Creative &amp; Smart <sup>10</sup>
+          </button>
+        </div>
+        <div class="collection-stage reveal" id="collection-stage">
+          <div class="collection-intro">
+            <span class="collection-number" id="collection-number">01—10</span>
+            <h3 id="collection-title">Your day,<br />at a glance.</h3>
+            <p id="collection-description">
+              The time, the forecast, the moments that matter. A little clarity
+              before you even open an app.
+            </p>
+            <span class="collection-note"
+              >Illustrative previews <span aria-hidden="true">↗</span></span
+            >
+          </div>
+          <div class="collection-examples" id="collection-examples">
+            <div class="sample-widget">
+              <span>Chrono</span><strong>09:41</strong
+              ><small>Tuesday, November 17</small>
+            </div>
+            <div class="sample-widget">
+              <span
+                >Atmosphere <svg class="icon"><use href="#sun" /></svg></span
+              ><strong>24°</strong
+              ><small>A little sunshine for your day.</small>
+            </div>
+          </div>
+        </div>
+        <div class="collection-list" id="collection-list" aria-live="polite">
+          <span>Chrono</span><span>Power</span><span>Atmosphere</span
+          ><span>Forecast</span><span>Calendar</span><span>Countdown</span
+          ><span>World Clock</span><span>Sun Cycle</span><span>Moon Phase</span
+          ><span>Air Quality</span>
+        </div>
+        <noscript
+          ><p>
+            Also explore Media, Devices, Productivity, Digital Life, Lifestyle,
+            and Creative &amp; Smart in the Android app. Enable JavaScript to
+            preview collections and themes here.
+          </p></noscript
+        >
+      </section>
 
-<script>
-(function(){
-  var sets=[
-    {wall:'linear-gradient(160deg,#0b1a3a,#2b6cb0 55%,#e04f8a)',dots:['#0b1a3a','#e04f8a','#2b6cb0'],g:['#2b6cb0','#e04f8a','#4da3ff'],
-     s:[['Tinted','#0f1520','#f0f3f8','#f07aaa'],['Rich','#1d2c4a','#f6f7f9','#6fa9e8'],['Night','#000000','#f5f5f7','#f07aaa'],['Light','#ebeef3','#14181f','#c22566']]},
-    {wall:'linear-gradient(160deg,#1a110e,#a5482a 55%,#ffb36b)',dots:['#1a110e','#ff8a3d','#ffb36b'],g:['#ff8a3d','#ffb36b','#a5482a'],
-     s:[['Tinted','#1b1310','#fbf3ee','#ffa066'],['Rich','#3a2116','#fbf7f4','#ffc47f'],['Night','#000000','#f5f5f7','#ffa066'],['Light','#f3eeeb','#1d1410','#c4521a']]},
-    {wall:'linear-gradient(160deg,#08130e,#1f6b4a 55%,#9be7b6)',dots:['#08130e','#30d158','#9be7b6'],g:['#30d158','#1f6b4a','#64d2ff'],
-     s:[['Tinted','#0e1712','#f1f7f3','#6fe08f'],['Rich','#173628','#f6f8f7','#7fd8e6'],['Night','#000000','#f5f5f7','#6fe08f'],['Light','#ecf2ee','#101a14','#178a3a']]},
-    {wall:'linear-gradient(160deg,#120d22,#5e3aa8 55%,#c9a7ff)',dots:['#120d22','#b99aff','#5e3aa8'],g:['#7c5cff','#b99aff','#ff6b9a'],
-     s:[['Tinted','#14111d','#f4f2f9','#b49cff'],['Rich','#2a1f4a','#f7f6fa','#ff8fb3'],['Night','#000000','#f5f5f7','#b49cff'],['Light','#efedf4','#17131f','#6a3fd1']]}
-  ];
-  var i=0,pick=0,timer,
-      wall=document.getElementById('wall'),ww=document.getElementById('ww'),wb=document.getElementById('wb'),
-      dots=document.getElementById('dots').children,sw=document.getElementById('sw'),glow=document.getElementById('glow');
-  function apply(k){
-    pick=k;var c=sets[i].s[k];
-    ww.style.background=c[1];ww.style.color=c[2];wb.style.background=c[3];
-    Array.prototype.forEach.call(sw.children,function(b,j){b.setAttribute('aria-pressed',j===k)});
-  }
-  function render(){
-    var set=sets[i];
-    wall.style.background=set.wall;
-    set.dots.forEach(function(d,j){dots[j].style.background=d});
-    if(glow){glow.style.setProperty('--g1',set.g[0]);glow.style.setProperty('--g2',set.g[1]);glow.style.setProperty('--g3',set.g[2])}
-    sw.innerHTML='';
-    set.s.forEach(function(c,j){
-      var b=document.createElement('button');b.type='button';
-      b.innerHTML='<div class="s" style="background:'+c[1]+';color:'+c[2]+'"><i style="background:'+c[3]+'"></i><span>9:41</span></div>'+c[0];
-      b.addEventListener('click',function(){apply(j);restart()});
-      sw.appendChild(b);
-    });
-    apply(0);
-  }
-  function next(){i=(i+1)%sets.length;render()}
-  function restart(){clearInterval(timer);timer=setInterval(next,4200)}
-  render();
-  if(!window.matchMedia('(prefers-reduced-motion: reduce)').matches)restart();
+      <section
+        class="studio-section"
+        id="studio"
+        aria-labelledby="studio-title"
+      >
+        <div class="wrap studio-grid">
+          <div class="studio-copy reveal">
+            <p class="eyebrow"><span>02 /</span> MAKE IT YOURS</p>
+            <h2 id="studio-title">
+              One change.<br />A whole<br /><em>new mood.</em>
+            </h2>
+            <p>
+              Choose a theme. Watch everything fall into place. Fonts, colors,
+              corners and glass, shared across every widget.
+            </p>
+            <div
+              class="theme-picker"
+              role="group"
+              aria-label="Preview a Studio theme"
+            >
+              <button
+                data-theme="mint"
+                aria-label="Mint wallpaper palette"
+                aria-pressed="true"
+                style="--swatch: #c4e8d1"
+              ></button
+              ><button
+                data-theme="rose"
+                aria-label="Rosé theme"
+                aria-pressed="false"
+                style="--swatch: #e9c5cb"
+              ></button
+              ><button
+                data-theme="sand"
+                aria-label="Sand theme"
+                aria-pressed="false"
+                style="--swatch: #e6d5b4"
+              ></button
+              ><button
+                data-theme="ocean"
+                aria-label="Ocean theme"
+                aria-pressed="false"
+                style="--swatch: #b7d3ed"
+              ></button
+              ><button
+                data-theme="amethyst"
+                aria-label="Amethyst theme"
+                aria-pressed="false"
+                style="--swatch: #cabcec"
+              ></button>
+            </div>
+            <p class="theme-name" aria-live="polite">
+              <span id="theme-name">Mint</span>
+              <span>— try a different feeling</span>
+            </p>
+            <div class="studio-rule"></div>
+            <div class="studio-detail">
+              <svg class="icon"><use href="#spark" /></svg>
+              <div>
+                <strong>Your wallpaper has good taste.</strong>
+                <p>
+                  Studio finds colors in your wallpaper and suggests four
+                  matching palettes. Your layout stays just the way you like it.
+                </p>
+              </div>
+            </div>
+          </div>
+          <div class="studio-demo reveal" data-palette="mint">
+            <div class="studio-window-top">
+              <span><i></i><i></i><i></i></span
+              ><span>YOUR HOME SCREEN, REIMAGINED</span
+              ><svg class="icon"><use href="#grid" /></svg>
+            </div>
+            <div class="demo-landscape">
+              <div class="landscape-sun"></div>
+              <div class="landscape-hill hill-back"></div>
+              <div class="landscape-hill hill-front"></div>
+              <div class="studio-widgets">
+                <div class="studio-clock">
+                  <div class="widget-top">
+                    <span>Tuesday</span><span>100% ▰</span>
+                  </div>
+                  <strong>09:41</strong><span>MAKE TODAY A GOOD ONE.</span>
+                </div>
+                <div class="studio-small">
+                  <svg class="icon"><use href="#sun" /></svg><strong>24°</strong
+                  ><span>Feels like a fresh start.</span>
+                </div>
+                <div class="studio-small studio-focus">
+                  <div class="focus-ring"><span>25:00</span></div>
+                  <span>A little time for you.</span>
+                </div>
+                <div class="studio-song">
+                  <span class="mini-record" aria-hidden="true"></span>
+                  <div>
+                    <strong>Slow mornings</strong
+                    ><span>Your daily soundtrack</span>
+                  </div>
+                  <span aria-hidden="true">▶</span>
+                </div>
+              </div>
+            </div>
+            <div class="studio-window-bottom">
+              <span
+                ><span class="status-dot"></span> One style. Every widget.</span
+              ><span>Interactive concept</span>
+            </div>
+          </div>
+        </div>
+      </section>
 
-  var els=document.querySelectorAll('.reveal');
-  if('IntersectionObserver' in window){
-    var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}})},{rootMargin:'0px 0px -8% 0px'});
-    els.forEach(function(e){io.observe(e)});
-  }else{els.forEach(function(e){e.classList.add('in')})}
-})();
-</script>
-</body>
+      <section
+        class="section wrap details-section"
+        aria-labelledby="details-title"
+      >
+        <div class="section-heading reveal">
+          <div>
+            <p class="eyebrow"><span>03 /</span> THOUGHTFULLY CONNECTED</p>
+            <h2 id="details-title">
+              Looks good.<br /><em>Feels even better.</em>
+            </h2>
+          </div>
+          <p>
+            Good design goes beyond the first glance. Every little detail is
+            here to make your day a little easier.
+          </p>
+        </div>
+        <div class="feature-grid">
+          <article class="feature-card feature-size reveal">
+            <div class="size-demo" aria-hidden="true">
+              <div>
+                <span>Tuesday</span><strong>09:41</strong
+                ><span class="resize-extra">A GOOD DAY AHEAD.</span>
+              </div>
+              <span class="resize-handle">⌟</span>
+            </div>
+            <span class="feature-index">01</span>
+            <h3>A perfect fit. At any size.</h3>
+            <p>
+              From a quiet single row to a full 4 × 4 moment. Resize a widget
+              and its layout adapts to your screen.
+            </p>
+          </article>
+          <article class="feature-card feature-wall reveal">
+            <div class="wallpaper-stack" aria-hidden="true">
+              <div class="mini-wall wall-one"></div>
+              <div class="mini-wall wall-two"></div>
+              <div class="mini-wall wall-three"></div>
+              <span class="wall-label">4K, YOUR WAY ↗</span>
+            </div>
+            <span class="feature-index">02</span>
+            <h3>A fresh perspective.</h3>
+            <p>
+              Find your next 4K wallpaper on Wallhaven. Filter by vibe, color or
+              brightness, then make it yours. Artist credits included.
+            </p>
+          </article>
+          <article class="feature-card feature-private reveal">
+            <div class="privacy-art" aria-hidden="true">
+              <div class="privacy-ring"></div>
+              <svg class="icon"><use href="#shield" /></svg
+              ><span>JUST YOU &amp; YOUR SCREEN</span>
+            </div>
+            <span class="feature-index">03</span>
+            <h3>Your screen. Your business.</h3>
+            <p>
+              No accounts. No ads. No analytics. Your notes, tasks, habits and
+              photos stay right where they belong: on your phone.
+            </p>
+          </article>
+        </div>
+      </section>
+
+      <section
+        class="inside-section section"
+        id="inside"
+        aria-labelledby="inside-title"
+      >
+        <div class="wrap section-heading reveal">
+          <div>
+            <p class="eyebrow"><span>04 /</span> THE REAL THING</p>
+            <h2 id="inside-title">
+              Nice on the outside.<br /><em>Thoughtful on the inside.</em>
+            </h2>
+          </div>
+          <div class="gallery-intro">
+            <p>
+              A closer look at the actual app. Everything you need, with room to
+              breathe.
+            </p>
+            <div class="gallery-controls">
+              <button
+                type="button"
+                class="circle-button"
+                id="gallery-prev"
+                aria-label="Previous screenshots"
+              >
+                <svg class="icon"><use href="#arrow" /></svg></button
+              ><button
+                type="button"
+                class="circle-button"
+                id="gallery-next"
+                aria-label="Next screenshots"
+              >
+                <svg class="icon"><use href="#arrow" /></svg>
+              </button>
+            </div>
+          </div>
+        </div>
+        <div
+          class="screenshots"
+          id="screenshots"
+          tabindex="0"
+          role="region"
+          aria-label="App screenshots, scroll horizontally to explore"
+        >
+          <figure>
+            <div class="screenshot-frame">
+              <img
+                src="assets/shots/widgets.webp"
+                alt="So Widget gallery with clock, battery and weather widgets"
+                width="540"
+                height="1200"
+                loading="lazy"
+              />
+            </div>
+            <figcaption><span>01 /</span> Find your favorites</figcaption>
+          </figure>
+          <figure>
+            <div class="screenshot-frame">
+              <img
+                src="assets/shots/studio.webp"
+                alt="Studio color themes and shared widget styling controls"
+                width="540"
+                height="1200"
+                loading="lazy"
+              />
+            </div>
+            <figcaption><span>02 /</span> Set the mood</figcaption>
+          </figure>
+          <figure>
+            <div class="screenshot-frame">
+              <img
+                src="assets/shots/detail.webp"
+                alt="Vinyl widget detail with different widget sizes"
+                width="540"
+                height="1200"
+                loading="lazy"
+              />
+            </div>
+            <figcaption><span>03 /</span> Get every detail right</figcaption>
+          </figure>
+          <figure>
+            <div class="screenshot-frame">
+              <img
+                src="assets/shots/home-screen.webp"
+                alt="Clock widget on a real Android home screen"
+                width="540"
+                height="1200"
+                loading="lazy"
+              />
+            </div>
+            <figcaption><span>04 /</span> Make yourself at home</figcaption>
+          </figure>
+          <figure>
+            <div class="screenshot-frame">
+              <img
+                src="assets/shots/media.webp"
+                alt="So Widget media collection"
+                width="540"
+                height="1200"
+                loading="lazy"
+              />
+            </div>
+            <figcaption><span>05 /</span> Find your rhythm</figcaption>
+          </figure>
+          <figure>
+            <div class="screenshot-frame">
+              <img
+                src="assets/shots/chrono.webp"
+                alt="Chrono clock widget preview and settings"
+                width="540"
+                height="1200"
+                loading="lazy"
+              />
+            </div>
+            <figcaption><span>06 /</span> Make time look good</figcaption>
+          </figure>
+          <figure>
+            <div class="screenshot-frame">
+              <img
+                src="assets/shots/permissions.webp"
+                alt="Permission settings with an explanation for each permission"
+                width="540"
+                height="1200"
+                loading="lazy"
+              />
+            </div>
+            <figcaption><span>07 /</span> Stay in control</figcaption>
+          </figure>
+        </div>
+        <p class="gallery-hint wrap">
+          Swipe, scroll, or use the arrows to take a look around.
+          <span aria-hidden="true">↔</span>
+        </p>
+      </section>
+
+      <section
+        class="section wrap getting-started"
+        id="install"
+        aria-labelledby="install-title"
+      >
+        <div class="reveal">
+          <p class="eyebrow"><span>05 /</span> LESS SETUP, MORE YOU</p>
+          <h2 id="install-title">
+            Your new screen.<br /><em>Three little steps.</em>
+          </h2>
+        </div>
+        <ol class="install-steps">
+          <li class="reveal">
+            <span>01</span>
+            <div>
+              <h3>Make a little space.</h3>
+              <p>
+                <a
+                  href="https://github.com/qaxxorovxd-mobile/so-widget/releases/latest/download/app-arm64-v8a-release.apk"
+                  >Download the Android APK
+                  <span aria-hidden="true">↗</span></a
+                >. Choose ARM64 for most phones, or find the universal APK in
+                <a
+                  href="https://github.com/qaxxorovxd-mobile/so-widget/releases/latest"
+                  >all downloads</a
+                >.
+              </p>
+            </div>
+          </li>
+          <li class="reveal">
+            <span>02</span>
+            <div>
+              <h3>Let the good stuff in.</h3>
+              <p>
+                Open the file and allow installation from this source when
+                Android asks. You're ready to explore.
+              </p>
+            </div>
+          </li>
+          <li class="reveal">
+            <span>03</span>
+            <div>
+              <h3>Make yourself at home.</h3>
+              <p>
+                Open a widget and tap “Add widget.” Or long-press your home
+                screen, choose Widgets, and find So Widget.
+              </p>
+            </div>
+          </li>
+        </ol>
+      </section>
+
+      <section
+        class="section wrap faq-section"
+        id="faq"
+        aria-labelledby="faq-title"
+      >
+        <div>
+          <p class="eyebrow"><span>06 /</span> GOOD TO KNOW</p>
+          <h2 id="faq-title">A few little<br /><em>answers.</em></h2>
+          <p class="faq-aside">
+            Something else on your mind?<br /><a
+              class="text-link"
+              href="https://github.com/qaxxorovxd-mobile/so-widget/issues"
+              >Find us on GitHub <span aria-hidden="true">↗</span></a
+            >
+          </p>
+        </div>
+        <div class="faq-list">
+          <details>
+            <summary>
+              Is it really free?<span aria-hidden="true">+</span>
+            </summary>
+            <div class="faq-answer">
+              <p>
+                Yes. All 60 widgets, Studio themes and wallpaper browsing are
+                free. No ads, no subscriptions, no account to create.
+              </p>
+            </div>
+          </details>
+          <details>
+            <summary>
+              Will it work on my phone?<span aria-hidden="true">+</span>
+            </summary>
+            <div class="faq-answer">
+              <p>
+                So Widget supports Android 7.0 and newer. Wallpaper color
+                suggestions use Android 8.1 or newer; older phones use the last
+                wallpaper you set in the app. iOS is not supported yet.
+              </p>
+            </div>
+          </details>
+          <details>
+            <summary>
+              Why does it need notification access?<span aria-hidden="true"
+                >+</span
+              >
+            </summary>
+            <div class="faq-answer">
+              <p>
+                Media widgets use notification access to read the currently
+                playing song and provide playback controls. This information is
+                not stored or sent anywhere.
+              </p>
+            </div>
+          </details>
+          <details>
+            <summary>
+              What about my battery?<span aria-hidden="true">+</span>
+            </summary>
+            <div class="faq-answer">
+              <p>
+                Widgets are designed to keep background work light. Most refresh
+                about every five minutes through Android's job scheduler; media
+                widgets respond to playback changes. Actual battery use depends
+                on the widgets and your device.
+              </p>
+            </div>
+          </details>
+          <details>
+            <summary>
+              Where do the wallpapers come from?<span aria-hidden="true"
+                >+</span
+              >
+            </summary>
+            <div class="faq-answer">
+              <p>
+                Wallpapers are loaded from
+                <a href="https://wallhaven.cc">Wallhaven</a> and belong to their
+                original artists. So Widget shows SFW content, credits the
+                uploader and source, and keeps credits in downloaded files.
+                Wallpapers are for personal use. So Widget is not affiliated
+                with Wallhaven. Reports can be made through
+                <a href="https://wallhaven.cc/dmca">Wallhaven's DMCA page</a>.
+              </p>
+            </div>
+          </details>
+        </div>
+      </section>
+
+      <section class="closing wrap" aria-labelledby="closing-title">
+        <div class="closing-panel reveal">
+          <span class="closing-star" aria-hidden="true">✳</span>
+          <p class="eyebrow">A SMALL CHANGE. A GOOD FEELING.</p>
+          <h2 id="closing-title">Come on.<br />Make it <em>yours.</em></h2>
+          <p>
+            Your home screen is the start of so many things.<br />Make it a
+            place you love coming back to.
+          </p>
+          <a
+            class="button button-dark"
+            href="https://github.com/qaxxorovxd-mobile/so-widget/releases/latest/download/app-arm64-v8a-release.apk"
+            ><svg class="icon"><use href="#android" /></svg> Get So Widget
+            <svg class="icon"><use href="#arrow" /></svg></a
+          ><span class="closing-meta">FREE · ANDROID 7.0+ · MADE WITH CARE</span
+          ><span class="closing-decoration" aria-hidden="true">so.</span>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer wrap">
+      <div class="footer-top">
+        <a class="brand" href="#top"
+          ><img src="assets/logo.webp" width="36" height="36" alt="" /><span
+            >so widget<span class="brand-dot">.</span></span
+          ></a
+        >
+        <p>Little widgets. Big personality.</p>
+        <nav aria-label="Footer navigation">
+          <a href="https://github.com/qaxxorovxd-mobile/so-widget">GitHub ↗</a
+          ><a
+            href="https://github.com/qaxxorovxd-mobile/so-widget/releases/latest"
+            >All downloads ↗</a
+          ><a href="https://qaxxorov.uz">Made by qaxxorov.uz ↗</a>
+        </nav>
+      </div>
+      <div class="footer-bottom">
+        <span>© 2026 qaxxorov.uz</span
+        ><span>Designed to feel a little more you.</span
+        ><a href="#top">Back to top ↑</a>
+      </div>
+      <p class="credits">
+        Data from Open-Meteo, CoinGecko, the Central Bank of Uzbekistan, Yahoo
+        Finance and Lorem Picsum. Wallpapers by Wallhaven; images belong to
+        their artists. So Widget is not affiliated with Wallhaven, Google or
+        Apple. Android is a trademark of Google LLC.
+      </p>
+    </footer>
+  </body>
 </html>

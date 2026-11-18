@@ -1,0 +1,8 @@
+# Leftovers from the Flutter app on main; this branch holds only the static site.
+.dart_tool/
+.flutter-plugins-dependencies
+.idea/
+*.iml
+android/
+build/
+ios/

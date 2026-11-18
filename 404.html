@@ -1,7 +1,93 @@
 <!doctype html>
-<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Page not found · So Widget</title><link rel="icon" type="image/webp" href="/so-widget/assets/logo.webp">
-<style>body{margin:0;min-height:100vh;display:grid;place-items:center;background:#000;color:#f5f5f7;font-family:Inter,system-ui,sans-serif;text-align:center;padding:16px}
-img{width:72px;height:72px;border-radius:18px;margin:0 auto 20px;display:block}h1{font-size:28px;letter-spacing:-.03em;margin:0 0 8px}p{color:rgba(235,235,245,.6);margin:0 0 24px}
-a{display:inline-block;background:#f5f5f7;color:#000;padding:12px 22px;border-radius:999px;font-weight:600;text-decoration:none}</style></head>
-<body><main><img src="/so-widget/assets/logo.webp" alt=""><h1>This page doesn't exist</h1><p>But your next home screen does.</p><a href="/so-widget/">Back to So Widget</a></main></body></html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#f5f5ef" />
+    <meta name="robots" content="noindex" />
+    <title>A little off track — So Widget</title>
+    <link rel="icon" type="image/webp" href="/so-widget/assets/logo.webp" />
+    <style>
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        margin: 0;
+        min-height: 100svh;
+        background: #f5f5ef;
+        color: #222820;
+        font-family: system-ui, sans-serif;
+        display: grid;
+        place-items: center;
+        padding: 32px;
+        text-align: center;
+      }
+      main {
+        max-width: 540px;
+      }
+      .brand {
+        font-size: 18px;
+        font-weight: 650;
+        letter-spacing: -0.7px;
+      }
+      .number {
+        font-size: clamp(110px, 25vw, 190px);
+        font-weight: 600;
+        line-height: 1.2;
+        letter-spacing: -12px;
+        color: #8ca575;
+        margin: 36px 0 18px;
+      }
+      h1 {
+        font-size: clamp(27px, 5vw, 40px);
+        font-weight: 600;
+        letter-spacing: -1.8px;
+        margin: 0 0 16px;
+      }
+      p {
+        font-size: 15px;
+        line-height: 1.8;
+        color: #62675e;
+        margin: 0 0 28px;
+      }
+      a {
+        display: inline-flex;
+        gap: 25px;
+        align-items: center;
+        background: #222820;
+        color: #f5f5ef;
+        border-radius: 9px;
+        padding: 15px 24px;
+        text-decoration: none;
+        font-size: 13px;
+        transition: background 0.2s;
+      }
+      a:hover {
+        background: #4c6540;
+      }
+      a:focus-visible {
+        outline: 3px solid #567c48;
+        outline-offset: 5px;
+      }
+      .note {
+        font-size: 10px;
+        letter-spacing: 1px;
+        margin-top: 38px;
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <div class="brand">so widget.</div>
+      <div class="number" aria-hidden="true">404</div>
+      <h1>A little off track.</h1>
+      <p>
+        This page isn't here.<br />But a home screen that feels like you is.
+      </p>
+      <a href="/so-widget/"
+        >Back to So Widget <span aria-hidden="true">↗</span></a
+      >
+      <p class="note">LITTLE WIDGETS. BIG PERSONALITY.</p>
+    </main>
+  </body>
+</html>
