@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://qaxxorovxd-mobile.github.io/so-widget/sitemap.xml

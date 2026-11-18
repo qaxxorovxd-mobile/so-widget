@@ -1,0 +1,432 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>So Widget — Premium home-screen widgets for Android</title>
+<meta name="description" content="60 premium home-screen widgets for Android with one shared style, colors that match your wallpaper, live media and 4K wallpapers. By qaxxorov.uz.">
+<meta name="theme-color" content="#000000">
+<meta name="color-scheme" content="dark">
+<link rel="canonical" href="https://qaxxorovxd-mobile.github.io/so-widget/">
+<link rel="icon" type="image/webp" href="assets/logo.webp">
+<link rel="apple-touch-icon" href="assets/logo.webp">
+<meta property="og:type" content="website">
+<meta property="og:title" content="So Widget — Your home screen, designed in one piece">
+<meta property="og:description" content="60 premium widgets for Android. One style, colors from your wallpaper, live media and 4K wallpapers.">
+<meta property="og:url" content="https://qaxxorovxd-mobile.github.io/so-widget/">
+<meta property="og:image" content="https://qaxxorovxd-mobile.github.io/so-widget/assets/og.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"SoftwareApplication","name":"So Widget","operatingSystem":"Android 7.0+","applicationCategory":"PersonalizationApplication","softwareVersion":"1.3.0","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"author":{"@type":"Person","name":"qaxxorov.uz","url":"https://qaxxorov.uz"}}
+</script>
+<style>
+:root{
+  --bg:#000;--bg2:#0b0b0d;--card:#141416;--card2:#1c1c1e;--line:rgba(255,255,255,.09);
+  --text:#f5f5f7;--text2:rgba(235,235,245,.62);--text3:rgba(235,235,245,.38);
+  --accent:#f5f5f7;--grad1:#7c5cff;--grad2:#ff6b9a;--grad3:#4da3ff;
+  --radius:28px;--max:1120px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{background:var(--bg);color:var(--text);font-family:Inter,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;line-height:1.5;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+img{display:block;max-width:100%;height:auto}
+a{color:inherit;text-decoration:none}
+.wrap{max-width:var(--max);margin:0 auto;padding:0 24px}
+@media (max-width:600px){.wrap{padding:0 16px}}
+
+/* nav */
+.nav{position:sticky;top:0;z-index:50;backdrop-filter:saturate(180%) blur(20px);-webkit-backdrop-filter:saturate(180%) blur(20px);background:rgba(0,0,0,.72);border-bottom:1px solid var(--line)}
+.nav .wrap{display:flex;align-items:center;gap:28px;height:60px}
+.brand{display:flex;align-items:center;gap:10px;font-weight:700;letter-spacing:-.02em}
+.brand img{width:30px;height:30px;border-radius:8px}
+.nav ul{display:flex;gap:24px;list-style:none;margin-left:auto;font-size:14px;color:var(--text2)}
+.nav ul a:hover{color:var(--text)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;height:44px;padding:0 20px;border-radius:999px;font-weight:600;font-size:15px;transition:transform .15s ease,background .2s ease,opacity .2s}
+.btn:active{transform:scale(.97)}
+.btn-primary{background:var(--text);color:#000}
+.btn-primary:hover{background:#fff}
+.btn-ghost{border:1px solid var(--line);color:var(--text);background:rgba(255,255,255,.04)}
+.btn-ghost:hover{background:rgba(255,255,255,.09)}
+.btn-sm{height:36px;padding:0 16px;font-size:14px}
+.btn svg{width:18px;height:18px}
+@media (max-width:760px){.nav ul{display:none}.nav .btn-sm{margin-left:auto}}
+
+/* hero */
+.hero{position:relative;padding:96px 0 40px;text-align:center;overflow:hidden}
+.glow{position:absolute;inset:-20% -10% auto;height:720px;pointer-events:none;filter:blur(90px);opacity:.55;
+  background:radial-gradient(40% 50% at 30% 40%,var(--g1,#7c5cff),transparent 70%),radial-gradient(40% 50% at 70% 35%,var(--g2,#ff6b9a),transparent 70%),radial-gradient(35% 45% at 50% 70%,var(--g3,#4da3ff),transparent 70%);
+  transition:background 1.2s ease}
+.pill{display:inline-flex;align-items:center;gap:8px;padding:6px 14px;border-radius:999px;border:1px solid var(--line);background:rgba(255,255,255,.05);font-size:13px;color:var(--text2);position:relative}
+.pill b{color:var(--text);font-weight:600}
+.dot{width:7px;height:7px;border-radius:50%;background:#30d158;box-shadow:0 0 10px #30d158}
+h1{position:relative;font-size:clamp(40px,7.4vw,84px);line-height:1.02;letter-spacing:-.045em;font-weight:800;margin:22px auto 18px;max-width:900px}
+.grad{background:linear-gradient(100deg,#fff 10%,#d9ccff 45%,#ffc2d6 75%,#fff);-webkit-background-clip:text;background-clip:text;color:transparent}
+.lead{position:relative;font-size:clamp(17px,2.2vw,21px);color:var(--text2);max-width:640px;margin:0 auto 34px}
+.cta{position:relative;display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+.meta{position:relative;margin-top:16px;font-size:13px;color:var(--text3)}
+
+/* phones */
+.phones{position:relative;display:flex;justify-content:center;align-items:flex-end;gap:0;margin:72px auto 0;height:600px;max-width:960px}
+.phone{position:relative;width:270px;aspect-ratio:9/20;border-radius:44px;padding:10px;background:linear-gradient(160deg,#2a2a2e,#0c0c0e);box-shadow:0 0 0 1px rgba(255,255,255,.08) inset,0 40px 80px -20px rgba(0,0,0,.9),0 0 0 1px #000;flex:none}
+.phone img{width:100%;height:100%;object-fit:cover;border-radius:35px;background:#000}
+.phone.l{transform:translateX(60px) rotate(-8deg) scale(.86);transform-origin:bottom center;z-index:1;opacity:.92}
+.phone.r{transform:translateX(-60px) rotate(8deg) scale(.86);transform-origin:bottom center;z-index:1;opacity:.92}
+.phone.c{z-index:2}
+@media (max-width:760px){.phones{height:auto;margin-top:48px}.phone{width:58vw;max-width:270px}.phone.l,.phone.r{display:none}}
+
+/* stats */
+.stats{display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid var(--line);border-bottom:1px solid var(--line);margin-top:80px}
+.stat{padding:30px 16px;text-align:center;border-right:1px solid var(--line)}
+.stat:last-child{border-right:0}
+.stat b{display:block;font-size:clamp(28px,4vw,44px);font-weight:800;letter-spacing:-.04em}
+.stat span{font-size:13px;color:var(--text2)}
+@media (max-width:600px){.stats{grid-template-columns:repeat(2,1fr)}.stat:nth-child(2){border-right:0}.stat:nth-child(-n+2){border-bottom:1px solid var(--line)}}
+
+section{padding:110px 0}
+@media (max-width:600px){section{padding:72px 0}}
+.eyebrow{font-size:13px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--text3);margin-bottom:14px}
+h2{font-size:clamp(32px,5vw,56px);line-height:1.05;letter-spacing:-.04em;font-weight:800;max-width:780px}
+.sub{font-size:18px;color:var(--text2);max-width:620px;margin-top:16px}
+
+/* features */
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:56px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:28px;position:relative;overflow:hidden}
+.card .ic{width:44px;height:44px;border-radius:12px;display:grid;place-items:center;margin-bottom:18px}
+.card .ic svg{width:22px;height:22px}
+.card h3{font-size:19px;letter-spacing:-.02em;margin-bottom:8px}
+.card p{font-size:15px;color:var(--text2)}
+.card.wide{grid-column:span 2}
+@media (max-width:900px){.grid{grid-template-columns:1fr 1fr}.card.wide{grid-column:span 2}}
+@media (max-width:600px){.grid{grid-template-columns:1fr}.card.wide{grid-column:auto}}
+
+/* collections */
+.cols{display:flex;flex-wrap:wrap;gap:10px;margin-top:40px}
+.chip{padding:10px 16px;border-radius:999px;background:var(--card);border:1px solid var(--line);font-size:14px;color:var(--text2)}
+.chip b{color:var(--text);font-weight:600;margin-right:6px}
+
+/* split */
+.split{display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:center}
+.split .phone{margin:0 auto}
+@media (max-width:860px){.split{grid-template-columns:1fr;gap:48px}}
+.list{list-style:none;margin-top:28px;display:grid;gap:14px}
+.list li{display:flex;gap:12px;font-size:16px;color:var(--text2)}
+.list li::before{content:"";flex:none;width:20px;height:20px;margin-top:2px;border-radius:50%;background:#30d158 url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3E%3Cpath d='M5.5 10.5l3 3 6-7' fill='none' stroke='%23000' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center/14px no-repeat}
+.list b{color:var(--text);font-weight:600}
+
+/* wallpaper match demo */
+.match{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:22px;max-width:440px;margin:0 auto;width:100%}
+.wall{height:220px;border-radius:20px;position:relative;overflow:hidden;transition:background 1s ease}
+.wall::after{content:"";position:absolute;inset:0;background:radial-gradient(80% 60% at 70% 20%,rgba(255,255,255,.18),transparent 60%)}
+.wall .w{position:absolute;left:16px;bottom:16px;width:132px;height:132px;border-radius:26px;padding:14px;display:flex;flex-direction:column;justify-content:space-between;transition:all .8s ease;z-index:1;border:1px solid rgba(255,255,255,.12)}
+.wall .w .t{font-size:34px;font-weight:700;letter-spacing:-.04em;line-height:1}
+.wall .w .bar{height:4px;border-radius:2px;width:70%}
+.wall .w .d{font-size:12px;opacity:.7}
+.mh{display:flex;align-items:center;gap:10px;margin:18px 4px 14px}
+.mh .dots{display:flex}
+.mh .dots i{width:18px;height:18px;border-radius:50%;border:2px solid var(--card);margin-left:-6px;transition:background 1s}
+.mh .dots i:first-child{margin-left:0}
+.mh b{font-size:15px}
+.mh small{display:block;font-size:12.5px;color:var(--text2)}
+.sw{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.sw button{appearance:none;border:0;background:none;color:var(--text2);font:inherit;font-size:12px;cursor:pointer}
+.sw .s{aspect-ratio:1;border-radius:14px;padding:8px;display:flex;flex-direction:column;justify-content:space-between;border:1px solid rgba(255,255,255,.12);margin-bottom:6px;transition:all .6s ease;text-align:left}
+.sw .s i{width:9px;height:9px;border-radius:50%;display:block}
+.sw .s span{font-size:15px;font-weight:600}
+.sw button[aria-pressed=true] .s{outline:2px solid #fff;outline-offset:-2px}
+
+/* gallery */
+.shots{display:flex;gap:18px;overflow-x:auto;scroll-snap-type:x mandatory;padding:8px max(24px,calc((100vw - var(--max))/2 + 24px)) 24px;scroll-padding:0 24px;margin:48px 0 0;scrollbar-width:none}
+.shots::-webkit-scrollbar{display:none}
+.shots figure{flex:none;width:240px;scroll-snap-align:center}
+.shots img{border-radius:28px;border:1px solid var(--line);aspect-ratio:9/20;object-fit:cover;width:100%}
+.shots figcaption{font-size:13px;color:var(--text2);margin-top:10px;text-align:center}
+
+/* steps */
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:48px;counter-reset:s}
+.step{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:28px;counter-increment:s}
+.step::before{content:counter(s);display:grid;place-items:center;width:34px;height:34px;border-radius:50%;background:var(--text);color:#000;font-weight:700;margin-bottom:16px}
+.step h3{font-size:18px;margin-bottom:6px}
+.step p{color:var(--text2);font-size:15px}
+@media (max-width:760px){.steps{grid-template-columns:1fr}}
+
+/* faq */
+.faq{margin-top:40px;border-top:1px solid var(--line)}
+details{border-bottom:1px solid var(--line);padding:22px 0}
+summary{cursor:pointer;list-style:none;font-size:18px;font-weight:600;display:flex;justify-content:space-between;gap:16px}
+summary::-webkit-details-marker{display:none}
+summary::after{content:"+";font-weight:400;font-size:24px;line-height:1;color:var(--text2);transition:transform .2s}
+details[open] summary::after{transform:rotate(45deg)}
+details p{color:var(--text2);margin-top:12px;max-width:760px}
+details a{text-decoration:underline;text-underline-offset:3px}
+
+/* final cta */
+.final{text-align:center;position:relative;overflow:hidden;border-radius:40px;border:1px solid var(--line);padding:90px 24px;background:radial-gradient(60% 80% at 50% 0%,rgba(124,92,255,.28),transparent 70%),var(--bg2)}
+.final img{width:88px;height:88px;border-radius:22px;margin:0 auto 24px;box-shadow:0 20px 50px rgba(124,92,255,.35)}
+.final h2{margin:0 auto}
+.final .sub{margin:16px auto 32px}
+
+footer{border-top:1px solid var(--line);padding:48px 0 60px;font-size:13px;color:var(--text3)}
+footer .row{display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap;margin-bottom:24px}
+footer a{color:var(--text2)}
+footer a:hover{color:var(--text)}
+footer nav{display:flex;gap:20px;flex-wrap:wrap}
+footer p{max-width:820px;margin-top:8px}
+
+.reveal{opacity:0;transform:translateY(24px);transition:opacity .8s ease,transform .8s ease}
+.reveal.in{opacity:1;transform:none}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}.reveal{opacity:1;transform:none}}
+</style>
+</head>
+<body>
+
+<header class="nav">
+  <div class="wrap">
+    <a class="brand" href="#top"><img src="assets/logo.webp" alt="" width="30" height="30">So Widget</a>
+    <ul>
+      <li><a href="#features">Features</a></li>
+      <li><a href="#studio">Studio</a></li>
+      <li><a href="#wallpapers">Wallpapers</a></li>
+      <li><a href="#faq">FAQ</a></li>
+    </ul>
+    <a class="btn btn-primary btn-sm" href="https://github.com/qaxxorovxd-mobile/so-widget/releases/latest">Download</a>
+  </div>
+</header>
+
+<main id="top">
+  <div class="hero">
+    <div class="glow" id="glow"></div>
+    <div class="wrap">
+      <span class="pill"><span class="dot"></span><b>New in 1.3</b> Colors from your wallpaper</span>
+      <h1>Your home screen,<br><span class="grad">designed in one piece.</span></h1>
+      <p class="lead">60 premium widgets that share one style. Pick a theme and every widget follows. Change your wallpaper and the colors follow too.</p>
+      <div class="cta">
+        <a class="btn btn-primary" href="https://github.com/qaxxorovxd-mobile/so-widget/releases/latest/download/app-arm64-v8a-release.apk">
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.6 9.48l1.84-3.18a.38.38 0 00-.66-.38l-1.86 3.22a11.4 11.4 0 00-9.84 0L5.22 5.92a.38.38 0 00-.66.38L6.4 9.48A10.8 10.8 0 001 18h22a10.8 10.8 0 00-5.4-8.52zM7 15.25A1.25 1.25 0 118.25 14 1.25 1.25 0 017 15.25zm10 0A1.25 1.25 0 1118.25 14 1.25 1.25 0 0117 15.25z"/></svg>
+          Download for Android
+        </a>
+        <a class="btn btn-ghost" href="#features">See what's inside</a>
+      </div>
+      <p class="meta">Free · Version 1.3.0 · Android 7.0 or newer · No ads, no account</p>
+      <div class="phones">
+        <div class="phone l"><img src="assets/shots/widgets.webp" alt="So Widget gallery with 60 widgets" loading="eager" width="540" height="1200"></div>
+        <div class="phone c"><img src="assets/shots/home-screen.webp" alt="So Widget clock on an Android home screen" loading="eager" width="540" height="1200"></div>
+        <div class="phone r"><img src="assets/shots/studio.webp" alt="Studio themes and colors" loading="eager" width="540" height="1200"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="wrap">
+    <div class="stats">
+      <div class="stat"><b>60</b><span>widgets</span></div>
+      <div class="stat"><b>7</b><span>collections</span></div>
+      <div class="stat"><b>10</b><span>themes</span></div>
+      <div class="stat"><b>4K</b><span>wallpapers</span></div>
+    </div>
+  </div>
+
+  <section id="features">
+    <div class="wrap">
+      <p class="eyebrow">Features</p>
+      <h2 class="reveal">Everything a home screen needs. Nothing it doesn't.</h2>
+      <div class="grid">
+        <article class="card wide reveal">
+          <div class="ic" style="background:rgba(124,92,255,.18);color:#b99aff"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="3" width="7" height="7" rx="2"/><rect x="14" y="3" width="7" height="7" rx="2"/><rect x="3" y="14" width="7" height="7" rx="2"/><rect x="14" y="14" width="7" height="7" rx="2"/></svg></div>
+          <h3>One style for every widget</h3>
+          <p>Font, colors, corners, outline, glow and glass are shared by every widget. Tap “Apply to all widgets” and your whole home screen updates at once.</p>
+        </article>
+        <article class="card reveal">
+          <div class="ic" style="background:rgba(255,107,154,.16);color:#ff8fb3"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 3a9 9 0 000 18M3 12h18"/></svg></div>
+          <h3>Colors from your wallpaper</h3>
+          <p>Studio reads your wallpaper and suggests four matching color sets.</p>
+        </article>
+        <article class="card reveal">
+          <div class="ic" style="background:rgba(77,163,255,.16);color:#7cbcff"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></svg></div>
+          <h3>Any size</h3>
+          <p>Resize on the home screen from one row up to 4×4. The layout adapts and lines up to the pixel.</p>
+        </article>
+        <article class="card reveal">
+          <div class="ic" style="background:rgba(255,159,10,.16);color:#ffb340"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="2.5"/></svg></div>
+          <h3>Live media</h3>
+          <p>Seven music designs follow Spotify, YouTube Music or any player instantly, with working controls.</p>
+        </article>
+        <article class="card reveal">
+          <div class="ic" style="background:rgba(48,209,88,.16);color:#5be17f"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 3l7 3v6c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V6z"/></svg></div>
+          <h3>Private by design</h3>
+          <p>No account, no ads, no analytics. Notes, tasks and photos stay on your phone.</p>
+        </article>
+      </div>
+      <div class="cols reveal">
+        <span class="chip"><b>Essential</b>10</span>
+        <span class="chip"><b>Media</b>6</span>
+        <span class="chip"><b>Devices</b>4</span>
+        <span class="chip"><b>Productivity</b>10</span>
+        <span class="chip"><b>Digital Life</b>10</span>
+        <span class="chip"><b>Lifestyle</b>10</span>
+        <span class="chip"><b>Creative &amp; Smart</b>10</span>
+      </div>
+    </div>
+  </section>
+
+  <section id="studio" style="background:var(--bg2)">
+    <div class="wrap split">
+      <div>
+        <p class="eyebrow">Studio</p>
+        <h2 class="reveal">Change the wallpaper. The widgets follow.</h2>
+        <p class="sub">Every time your wallpaper changes, the top of Studio shows widget colors made from it. One tap applies them everywhere. Your text size, outline and corners stay exactly as you set them.</p>
+        <ul class="list">
+          <li><span><b>10 themes</b>: Graphite, Midnight, Paper, Mist, Ember, Ocean, Rosé, Mono, Amethyst, Sand</span></li>
+          <li><span><b>iOS-like fonts</b>: Inter, Geist, Nunito, Newsreader, Geist Mono and more</span></li>
+          <li><span><b>Fine control</b>: weight, text size, glow, corners, glass and a shared outline</span></li>
+        </ul>
+      </div>
+      <div class="match reveal" aria-label="Wallpaper color matching demo">
+        <div class="wall" id="wall">
+          <div class="w" id="ww"><div class="d" id="wd">Tuesday</div><div><div class="t">9:41</div></div><div class="bar" id="wb"></div></div>
+        </div>
+        <div class="mh">
+          <div class="dots" id="dots"><i></i><i></i><i></i></div>
+          <div><b>New wallpaper</b><small>Pick widget colors that suit it</small></div>
+        </div>
+        <div class="sw" id="sw"></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="wallpapers">
+    <div class="wrap split">
+      <div class="phone reveal"><img src="assets/shots/media.webp" alt="Media widgets in So Widget" loading="lazy" width="540" height="1200"></div>
+      <div>
+        <p class="eyebrow">Wallpapers by Wallhaven</p>
+        <h2 class="reveal">4K wallpapers, filtered your way.</h2>
+        <p class="sub">Browse phone-shaped wallpapers by vibe (Dark, AMOLED, Minimal, Neon, Space, Nature and more). Then sort, filter by quality, shape, brightness or one of 30 colors.</p>
+        <ul class="list">
+          <li><span><b>Set as wallpaper</b> on home, lock or both, with your own crop</span></li>
+          <li><span><b>Download to gallery</b> with the artist credit kept in the file</span></li>
+          <li><span><b>Fair to artists</b>: SFW only, uploader and source always shown</span></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section style="padding-top:0">
+    <div class="wrap">
+      <p class="eyebrow">A closer look</p>
+      <h2 class="reveal">Crafted down to the last pixel.</h2>
+    </div>
+    <div class="shots">
+      <figure><img src="assets/shots/widgets.webp" alt="Widget gallery" loading="lazy" width="540" height="1200"><figcaption>Widget gallery</figcaption></figure>
+      <figure><img src="assets/shots/detail.webp" alt="Vinyl media widget" loading="lazy" width="540" height="1200"><figcaption>Every size</figcaption></figure>
+      <figure><img src="assets/shots/chrono.webp" alt="Chrono clock widget" loading="lazy" width="540" height="1200"><figcaption>Chrono</figcaption></figure>
+      <figure><img src="assets/shots/studio.webp" alt="Studio" loading="lazy" width="540" height="1200"><figcaption>Studio</figcaption></figure>
+      <figure><img src="assets/shots/media.webp" alt="Media collection" loading="lazy" width="540" height="1200"><figcaption>Live media</figcaption></figure>
+      <figure><img src="assets/shots/permissions.webp" alt="Permissions" loading="lazy" width="540" height="1200"><figcaption>Clear permissions</figcaption></figure>
+    </div>
+  </section>
+
+  <section id="install" style="padding-top:40px">
+    <div class="wrap">
+      <p class="eyebrow">Install</p>
+      <h2 class="reveal">Ready in a minute.</h2>
+      <div class="steps">
+        <div class="step reveal"><h3>Download</h3><p>Get <code>app-arm64-v8a-release.apk</code> for most phones, or the universal <code>app-release.apk</code>.</p></div>
+        <div class="step reveal"><h3>Install</h3><p>Open the file and allow installing from this source when Android asks.</p></div>
+        <div class="step reveal"><h3>Add widgets</h3><p>Open any widget in the app and tap “Add widget”, or long-press your home screen and pick So Widget.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="faq" style="padding-top:40px">
+    <div class="wrap">
+      <p class="eyebrow">FAQ</p>
+      <h2>Questions</h2>
+      <div class="faq">
+        <details><summary>Is So Widget free?</summary><p>Yes. No ads, no subscriptions, no account.</p></details>
+        <details><summary>Which phones are supported?</summary><p>Android 7.0 or newer. Wallpaper color suggestions use Android 8.1 or newer; on older phones they come from the last wallpaper you set in the app. iOS is not supported yet.</p></details>
+        <details><summary>Why does it ask for notification access?</summary><p>Only to read the song that is playing so the media widgets can show it. Nothing is stored or sent anywhere.</p></details>
+        <details><summary>Do widgets drain the battery?</summary><p>No. Widgets are drawn once and refreshed about every 5 minutes by Android's own job scheduler. Media widgets update only when the music changes.</p></details>
+        <details><summary>Who owns the wallpapers?</summary><p>Every wallpaper belongs to its original artist and is loaded from <a href="https://wallhaven.cc" rel="noopener">Wallhaven</a>. So Widget does not host images, credits the uploader and is not affiliated with Wallhaven. To report an image, use Wallhaven's <a href="https://wallhaven.cc/dmca" rel="noopener">DMCA page</a>.</p></details>
+      </div>
+    </div>
+  </section>
+
+  <section style="padding-top:20px">
+    <div class="wrap">
+      <div class="final reveal">
+        <img src="assets/logo.webp" alt="So Widget" width="88" height="88">
+        <h2>Make your home screen yours.</h2>
+        <p class="sub">60 widgets, 10 themes, colors from your wallpaper. Free on Android.</p>
+        <div class="cta">
+          <a class="btn btn-primary" href="https://github.com/qaxxorovxd-mobile/so-widget/releases/latest/download/app-arm64-v8a-release.apk">Download for Android</a>
+          <a class="btn btn-ghost" href="https://github.com/qaxxorovxd-mobile/so-widget/releases/latest">All downloads</a>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="row">
+      <a class="brand" href="#top"><img src="assets/logo.webp" alt="" width="30" height="30">So Widget</a>
+      <nav>
+        <a href="https://github.com/qaxxorovxd-mobile/so-widget/releases/latest">Download</a>
+        <a href="https://github.com/qaxxorovxd-mobile/so-widget">GitHub</a>
+        <a href="https://qaxxorov.uz">qaxxorov.uz</a>
+      </nav>
+    </div>
+    <p>Data from Open-Meteo, CoinGecko, the Central Bank of Uzbekistan, Yahoo Finance and Lorem Picsum. Wallpapers by <a href="https://wallhaven.cc">Wallhaven</a>; each image belongs to its original artist. So Widget is not affiliated with Wallhaven, Google or Apple. Android is a trademark of Google LLC.</p>
+    <p>© 2026 qaxxorov.uz. Designed and developed by <a href="https://qaxxorov.uz">qaxxorov.uz</a>.</p>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var sets=[
+    {wall:'linear-gradient(160deg,#0b1a3a,#2b6cb0 55%,#e04f8a)',dots:['#0b1a3a','#e04f8a','#2b6cb0'],g:['#2b6cb0','#e04f8a','#4da3ff'],
+     s:[['Tinted','#0f1520','#f0f3f8','#f07aaa'],['Rich','#1d2c4a','#f6f7f9','#6fa9e8'],['Night','#000000','#f5f5f7','#f07aaa'],['Light','#ebeef3','#14181f','#c22566']]},
+    {wall:'linear-gradient(160deg,#1a110e,#a5482a 55%,#ffb36b)',dots:['#1a110e','#ff8a3d','#ffb36b'],g:['#ff8a3d','#ffb36b','#a5482a'],
+     s:[['Tinted','#1b1310','#fbf3ee','#ffa066'],['Rich','#3a2116','#fbf7f4','#ffc47f'],['Night','#000000','#f5f5f7','#ffa066'],['Light','#f3eeeb','#1d1410','#c4521a']]},
+    {wall:'linear-gradient(160deg,#08130e,#1f6b4a 55%,#9be7b6)',dots:['#08130e','#30d158','#9be7b6'],g:['#30d158','#1f6b4a','#64d2ff'],
+     s:[['Tinted','#0e1712','#f1f7f3','#6fe08f'],['Rich','#173628','#f6f8f7','#7fd8e6'],['Night','#000000','#f5f5f7','#6fe08f'],['Light','#ecf2ee','#101a14','#178a3a']]},
+    {wall:'linear-gradient(160deg,#120d22,#5e3aa8 55%,#c9a7ff)',dots:['#120d22','#b99aff','#5e3aa8'],g:['#7c5cff','#b99aff','#ff6b9a'],
+     s:[['Tinted','#14111d','#f4f2f9','#b49cff'],['Rich','#2a1f4a','#f7f6fa','#ff8fb3'],['Night','#000000','#f5f5f7','#b49cff'],['Light','#efedf4','#17131f','#6a3fd1']]}
+  ];
+  var i=0,pick=0,timer,
+      wall=document.getElementById('wall'),ww=document.getElementById('ww'),wb=document.getElementById('wb'),
+      dots=document.getElementById('dots').children,sw=document.getElementById('sw'),glow=document.getElementById('glow');
+  function apply(k){
+    pick=k;var c=sets[i].s[k];
+    ww.style.background=c[1];ww.style.color=c[2];wb.style.background=c[3];
+    Array.prototype.forEach.call(sw.children,function(b,j){b.setAttribute('aria-pressed',j===k)});
+  }
+  function render(){
+    var set=sets[i];
+    wall.style.background=set.wall;
+    set.dots.forEach(function(d,j){dots[j].style.background=d});
+    if(glow){glow.style.setProperty('--g1',set.g[0]);glow.style.setProperty('--g2',set.g[1]);glow.style.setProperty('--g3',set.g[2])}
+    sw.innerHTML='';
+    set.s.forEach(function(c,j){
+      var b=document.createElement('button');b.type='button';
+      b.innerHTML='<div class="s" style="background:'+c[1]+';color:'+c[2]+'"><i style="background:'+c[3]+'"></i><span>9:41</span></div>'+c[0];
+      b.addEventListener('click',function(){apply(j);restart()});
+      sw.appendChild(b);
+    });
+    apply(0);
+  }
+  function next(){i=(i+1)%sets.length;render()}
+  function restart(){clearInterval(timer);timer=setInterval(next,4200)}
+  render();
+  if(!window.matchMedia('(prefers-reduced-motion: reduce)').matches)restart();
+
+  var els=document.querySelectorAll('.reveal');
+  if('IntersectionObserver' in window){
+    var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}})},{rootMargin:'0px 0px -8% 0px'});
+    els.forEach(function(e){io.observe(e)});
+  }else{els.forEach(function(e){e.classList.add('in')})}
+})();
+</script>
+</body>
+</html>
