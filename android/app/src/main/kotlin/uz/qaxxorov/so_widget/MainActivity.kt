@@ -41,6 +41,7 @@ class MainActivity : FlutterActivity() {
     private var detachMedia: (() -> Unit)? = null
     private var detachHome: (() -> Unit)? = null
     private var detachDevice: (() -> Unit)? = null
+    private var detachWallpaper: (() -> Unit)? = null
     override fun configureFlutterEngine(flutterEngine: FlutterEngine) {
         super.configureFlutterEngine(flutterEngine)
         detachMedia = SoMedia.attach(this, flutterEngine.dartExecutor.binaryMessenger, events = true)
@@ -48,7 +49,7 @@ class MainActivity : FlutterActivity() {
         detachHome = SoHome.attach(applicationContext, flutterEngine.dartExecutor.binaryMessenger, listen = true)
         detachDevice = SoDevices.attach(applicationContext, flutterEngine.dartExecutor.binaryMessenger)
         SoDevices.updateAll(this)
-        SoWallpaper.attach(this, flutterEngine.dartExecutor.binaryMessenger)
+        detachWallpaper = SoWallpaper.attach(this, flutterEngine.dartExecutor.binaryMessenger)
         // Some phones (Xiaomi, Oppo…) unbind the listener after the app is killed; ask the system to rebind it.
         try {
             if (SoMedia.allowed(this) && android.os.Build.VERSION.SDK_INT >= 24) {
@@ -104,6 +105,8 @@ class MainActivity : FlutterActivity() {
         detachHome = null
         detachDevice?.invoke()
         detachDevice = null
+        detachWallpaper?.invoke()
+        detachWallpaper = null
         super.cleanUpFlutterEngine(flutterEngine)
     }
 }

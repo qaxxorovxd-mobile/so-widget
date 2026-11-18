@@ -8,6 +8,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:so_widget/core/registry.dart';
 import 'package:so_widget/core/state.dart';
 import 'package:so_widget/core/style.dart';
+import 'package:so_widget/core/wall_colors.dart';
 import 'package:so_widget/screens/detail.dart';
 import 'package:so_widget/screens/gallery.dart';
 import 'package:so_widget/screens/info.dart';
@@ -139,6 +140,29 @@ void main() {
       });
     }
   }
+
+  testWidgets('wallpaper color suggestions fit and apply', (tester) async {
+    app.store.set('wall.lastColors', [0xFF0B1A3A, 0xFFE04F8A, 0xFF2B6CB0]);
+    final before = app.settings.global;
+    for (final scale in [1.0, 1.6]) {
+      await mount(tester, const StudioPage(), const Size(320, 568), textScale: scale);
+      await tester.pumpAndSettle();
+      expect(find.text('New wallpaper'), findsOneWidget);
+      expect(tester.takeException(), isNull, reason: 'scale $scale');
+      await clean(tester);
+    }
+    await mount(tester, const StudioPage(), const Size(390, 844));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Rich'));
+    await tester.pump();
+    final rich = wallColors.suggestions[1];
+    expect(rich.matches(app.settings.global), isTrue);
+    expect(app.settings.global.textScale, before.textScale);
+    expect(wallColors.isNew, isFalse);
+    app.settings.setGlobal(before);
+    app.store.set('wall.lastColors', null);
+    await clean(tester);
+  });
 
   testWidgets('all widget editors fit a small phone', (tester) async {
     for (final def in allWidgets) {

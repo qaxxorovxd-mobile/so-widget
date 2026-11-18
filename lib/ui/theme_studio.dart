@@ -12,7 +12,7 @@ class ThemeStudio extends StatelessWidget {
     final s = app.settings;
     return Column(children: [
       Section(title: 'Themes · 10 collections',
-        footer: 'Tap a theme to apply its colors and fonts to every widget. Tap “Apply to all widgets” to update your home screen. Your edits are remembered for each theme.',
+        footer: 'Tap a theme to apply its colors and fonts to every widget. Tap “Apply to all widgets” to update your home screen. Text size, outline and corners stay the same across themes.',
         children: [Padding(padding: const EdgeInsets.all(12), child: LayoutBuilder(builder: (context, bounds) => Wrap(
           spacing: 10, runSpacing: 10,
           children: [for (final p in kPresets) SizedBox(
@@ -48,7 +48,7 @@ class ThemeStudio extends StatelessWidget {
             title: font, trailing: font == s.global.font ? const Icon(CupertinoIcons.checkmark, color: K.green) : null,
             onTap: () { s.setGlobal(s.global.copyWith(font: font, scriptFont: font)); Navigator.pop(context); },
           )])), title: 'Font for all widgets')),
-        RowItem(title: 'Restore this theme', subtitle: 'Reset its colors, fonts and layout',
+        RowItem(title: 'Restore this theme', subtitle: 'Reset its colors and fonts',
           icon: CupertinoIcons.arrow_counterclockwise, onTap: () => s.applyTheme(s.themeName, reset: true)),
       ]),
     ]);

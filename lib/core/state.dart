@@ -38,11 +38,15 @@ class Settings extends ChangeNotifier {
     _changed();
   }
 
+  /// Switching or restoring a theme changes its colors and fonts only. Personal layout
+  /// (text size, outline, corners, weight, glass, compact) stays as the user set it.
   void applyTheme(String name, {bool reset = false}) {
     final preset = kPresets.firstWhere((p) => p.name == name);
+    final mine = global;
     themeName = name;
     if (reset) themeStyles.remove(name);
-    global = themeStyles[name] ?? preset.style;
+    global = keepLayout(themeStyles[name] ?? preset.style, mine);
+    themeStyles[name] = global;
     overrides.clear();
     _changed();
   }

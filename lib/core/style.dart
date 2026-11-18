@@ -288,6 +288,19 @@ const kPresets = [
       accent: Color(0xFFD9B77E), font: 'Manrope', glow: false)),
 ];
 
+/// [theme] with the personal layout of [mine]: text size, outline, corners, weight, glass and spacing.
+WStyle keepLayout(WStyle theme, WStyle mine) => theme.copyWith(
+  textScale: mine.textScale,
+  compact: mine.compact,
+  border: mine.border,
+  borderWidth: mine.borderWidth,
+  borderOpacity: mine.borderOpacity,
+  textGlow: mine.textGlow,
+  bgOpacity: mine.bgOpacity,
+  weight: mine.weight,
+  radius: mine.radius,
+);
+
 /// Retain a theme's light/dark character while tinting its surface.
 WStyle tintTheme(WStyle current, WStyle base, Color main) {
   final hue = HSLColor.fromColor(main);

@@ -8,6 +8,8 @@ import 'package:flutter/services.dart';
 import 'package:material_ui/material_ui.dart';
 
 import '../core/state.dart';
+import '../core/style.dart' show parseHex;
+import '../core/wall_colors.dart';
 import '../core/wallhaven.dart';
 import '../ui/forms.dart';
 import '../widgets/productivity.dart' show openUrl;
@@ -246,6 +248,9 @@ class _WallpaperViewerState extends State<WallpaperViewer> {
       if (f == null) throw c.error ?? Exception('Download failed');
       await WallNative.set(f, target, ax: (c.align.x + 1) / 2, ay: (c.align.y + 1) / 2);
       HapticFeedback.heavyImpact();
+      if (target != 'lock') {
+        wallColors.rememberSet(c.wall.colors.map(parseHex).whereType<Color>().toList());
+      }
       if (mounted) {
         toast(context, switch (target) {
           'home' => 'Home screen wallpaper set',

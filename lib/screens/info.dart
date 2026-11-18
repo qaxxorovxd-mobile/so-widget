@@ -8,7 +8,7 @@ import '../ui/forms.dart';
 import 'permissions.dart';
 import '../widgets/productivity.dart' show openUrl;
 
-const kVersion = '1.2.0';
+const kVersion = '1.3.0';
 
 class InfoPage extends StatelessWidget {
   const InfoPage({super.key});
@@ -71,6 +71,29 @@ class InfoPage extends StatelessWidget {
         ),
         const SizedBox(height: 28),
         const _DeveloperCard(),
+        const Section(
+          title: "What's new in 1.3",
+          children: [
+            RowItem(
+              icon: CupertinoIcons.paintbrush_fill,
+              iconColor: Color(0xFFBF5AF2),
+              title: 'Colors from your wallpaper',
+              subtitle: 'Change your wallpaper and Studio suggests widget colors that match it.',
+            ),
+            RowItem(
+              icon: CupertinoIcons.textformat_size,
+              iconColor: K.blue,
+              title: 'Your layout stays',
+              subtitle: 'Text size, outline, corners, weight and glass are kept when you switch themes or presets.',
+            ),
+            RowItem(
+              icon: CupertinoIcons.photo_fill_on_rectangle_fill,
+              iconColor: K.green,
+              title: 'Wallpapers by Wallhaven',
+              subtitle: '4K phone wallpapers with filters, download to gallery and set as wallpaper.',
+            ),
+          ],
+        ),
         ListenableBuilder(
           listenable: perms,
           builder: (context, _) => Section(

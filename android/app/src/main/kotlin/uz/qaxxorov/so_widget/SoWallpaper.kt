@@ -35,9 +35,30 @@ object SoWallpaper {
     private const val REQ_STORAGE = 4713
     private val main = Handler(Looper.getMainLooper())
 
-    fun attach(activity: Activity, messenger: BinaryMessenger) {
-        MethodChannel(messenger, "so_widget/wallpaper").setMethodCallHandler { call, result ->
+    /** Returns a detach callback that stops the wallpaper-colors listener. */
+    fun attach(activity: Activity, messenger: BinaryMessenger): () -> Unit {
+        val channel = MethodChannel(messenger, "so_widget/wallpaper")
+        var listener: Any? = null
+        if (Build.VERSION.SDK_INT >= 27) {
+            val l = WallpaperManager.OnColorsChangedListener { _, which ->
+                if (which and WallpaperManager.FLAG_SYSTEM != 0) {
+                    try { channel.invokeMethod("colorsChanged", null) } catch (_: Exception) {}
+                }
+            }
+            try {
+                WallpaperManager.getInstance(activity).addOnColorsChangedListener(l, main)
+                listener = l
+            } catch (_: Exception) {}
+        }
+        channel.setMethodCallHandler { call, result ->
             when (call.method) {
+                "colors" -> {
+                    val app = activity.applicationContext
+                    Thread {
+                        val r = try { colors(app) } catch (_: Throwable) { null }
+                        main.post { result.success(r) }
+                    }.start()
+                }
                 "screen" -> {
                     val (w, h) = screen(activity)
                     result.success(mapOf("w" to w, "h" to h))
@@ -81,6 +102,26 @@ object SoWallpaper {
                 else -> result.notImplemented()
             }
         }
+        return {
+            channel.setMethodCallHandler(null)
+            if (Build.VERSION.SDK_INT >= 27 && listener != null) {
+                try {
+                    WallpaperManager.getInstance(activity)
+                        .removeOnColorsChangedListener(listener as WallpaperManager.OnColorsChangedListener)
+                } catch (_: Exception) {}
+            }
+        }
+    }
+
+    /** The home-screen wallpaper's main colors (Android 8.1+), most prominent first. */
+    private fun colors(c: Context): Map<String, Any>? {
+        if (Build.VERSION.SDK_INT < 27) return null
+        val wc = WallpaperManager.getInstance(c).getWallpaperColors(WallpaperManager.FLAG_SYSTEM) ?: return null
+        val list = listOfNotNull(wc.primaryColor, wc.secondaryColor, wc.tertiaryColor).map { it.toArgb().toLong() and 0xFFFFFFFFL }
+        if (list.isEmpty()) return null
+        val darkText = Build.VERSION.SDK_INT >= 31 &&
+            (wc.colorHints and android.app.WallpaperColors.HINT_SUPPORTS_DARK_TEXT) != 0
+        return mapOf("colors" to list, "darkText" to darkText)
     }
 
     /** Real (full) screen size in pixels, portrait. */

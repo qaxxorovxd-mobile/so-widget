@@ -71,7 +71,7 @@ class StyleEditor extends StatelessWidget {
               separatorBuilder: (_, _) => const SizedBox(width: 12),
               itemBuilder: (context, i) {
                 final p = kPresets[i];
-                final selected = p.style.sameAs(s);
+                final selected = keepLayout(p.style, s).sameAs(s);
                 return Semantics(
                   button: true,
                   selected: selected,
@@ -79,7 +79,7 @@ class StyleEditor extends StatelessWidget {
                   child: GestureDetector(
                     onTap: () {
                       tapFeedback();
-                      onChanged(p.style);
+                      onChanged(keepLayout(p.style, s));
                     },
                     child: Column(
                       children: [

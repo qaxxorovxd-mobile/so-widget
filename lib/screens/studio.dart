@@ -9,6 +9,7 @@ import '../ui/location.dart';
 import '../ui/style_editor.dart';
 import '../ui/theme_studio.dart';
 import '../ui/media_controls.dart';
+import '../ui/wall_match.dart';
 import 'picker.dart';
 
 class StudioPage extends StatelessWidget {
@@ -44,6 +45,7 @@ class StudioPage extends StatelessWidget {
                 style: TextStyle(fontSize: 13, color: K.label2, height: 1.4),
               ),
             ),
+            const WallpaperMatch(),
             SizedBox(
               height: 172,
               child: ListView(
