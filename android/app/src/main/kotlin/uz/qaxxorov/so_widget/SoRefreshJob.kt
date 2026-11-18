@@ -46,6 +46,7 @@ class SoRefreshJob : JobService() {
     private var engine: FlutterEngine? = null
     private var detachMedia: (() -> Unit)? = null
     private var detachHome: (() -> Unit)? = null
+    private var detachDevice: (() -> Unit)? = null
     private var active: JobParameters? = null
     private val timeout = Runnable { finishWork(false) }
 
@@ -62,6 +63,8 @@ class SoRefreshJob : JobService() {
                 engine = worker
                 detachMedia = SoMedia.attach(applicationContext, worker.dartExecutor.binaryMessenger)
                 detachHome = SoHome.attach(applicationContext, worker.dartExecutor.binaryMessenger, listen = false)
+                detachDevice = SoDevices.attach(applicationContext, worker.dartExecutor.binaryMessenger)
+                SoDevices.updateAll(applicationContext)
                 MethodChannel(worker.dartExecutor.binaryMessenger, "so_widget/background").setMethodCallHandler { call, result ->
                     if (call.method == "complete") {
                         val success = call.argument<Boolean>("success") == true
@@ -81,6 +84,8 @@ class SoRefreshJob : JobService() {
         detachMedia = null
         detachHome?.invoke()
         detachHome = null
+        detachDevice?.invoke()
+        detachDevice = null
         engine?.destroy()
         engine = null
         running = false

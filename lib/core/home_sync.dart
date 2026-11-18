@@ -243,7 +243,7 @@ class HomeSync {
   static const nativeNowPlaying = 'nowplaying';
 
   /// Media widgets are drawn by Kotlin, not rendered from Flutter.
-  static bool isNative(String id) => id == nativeNowPlaying || id.startsWith('m_');
+  static bool isNative(String id) => id == nativeNowPlaying || id.startsWith('m_') || id.startsWith('d_');
 
   /// Native widgets read their colors from here.
   static Future<void> _writeStyles(List<HomeInstance> list) async {

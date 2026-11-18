@@ -227,6 +227,10 @@ object SoNowPlaying {
         place(R.id.np_c_prev, R.id.np_prev, ctl.prev, "previous")
         place(R.id.np_c_toggle, R.id.np_toggle, ctl.toggle, "toggle")
         place(R.id.np_c_next, R.id.np_next, ctl.next, "next")
+        // No skip buttons drawn? Then the left edge goes back and the right edge skips ahead.
+        val edge = w * 0.28f
+        place(R.id.np_c_left, R.id.np_left, if (ctl.prev == null) RectF(0f, 0f, edge, h.toFloat()) else null, "previous")
+        place(R.id.np_c_right, R.id.np_right, if (ctl.next == null) RectF(w - edge, 0f, w.toFloat(), h.toFloat()) else null, "next")
 
         val open = when {
             !now.allowed -> PendingIntent.getActivity(
@@ -640,6 +644,22 @@ object SoNowPlaying {
                     "type" -> typeDesign(layout, n, tint)
                     "capsule" -> capsuleDesign(layout, n, tint)
                     else -> classicDesign(layout, n, tint)
+                }
+            }
+            // Subtle chevrons where the edges skip tracks.
+            if (n.hasTrack) {
+                val tf = SoDevices.icons(ctx)
+                if (tf != null) {
+                    val ink = if (variant == "cover" || variant == "capsule") Color.WHITE else fg
+                    val hint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
+                        typeface = tf
+                        textSize = u(13f)
+                        color = alpha(ink, 0.35f)
+                        textAlign = Paint.Align.CENTER
+                    }
+                    val y = h / 2 + u(4.5f)
+                    if (result.prev == null) cv.drawText(String(Character.toChars(SoDevices.G_CHEVRON_LEFT)), u(7f), y, hint)
+                    if (result.next == null) cv.drawText(String(Character.toChars(SoDevices.G_CHEVRON_RIGHT)), w - u(7f), y, hint)
                 }
             }
             cv.restore()

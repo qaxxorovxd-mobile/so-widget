@@ -53,7 +53,15 @@ class _RootShellState extends State<RootShell> with WidgetsBindingObserver {
 
   StreamSubscription<Uri?>? _sub;
 
-  void _handle(Uri? uri) => HomeSync.handleUri(
+  void _handle(Uri? uri) {
+    if (uri?.host == 'permissions') {
+      soNavKey.currentState?.push(MaterialPageRoute(fullscreenDialog: true, builder: (_) => const PermissionsPage()));
+      return;
+    }
+    _open(uri);
+  }
+
+  void _open(Uri? uri) => HomeSync.handleUri(
     uri,
     soNavKey,
     (def, wid) => DetailPage(def, homeWid: wid),

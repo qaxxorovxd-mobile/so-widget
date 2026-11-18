@@ -7,6 +7,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:path_provider/path_provider.dart';
 
 import '../core/api.dart';
+import '../core/device.dart';
 import '../core/media.dart';
 import 'media.dart' show MediaFace, mediaGlance;
 import '../core/registry.dart';
@@ -474,7 +475,7 @@ int dayIndex(int n, [int salt = 0]) {
 }
 
 Widget _quote(WCtx c) {
-  final q = _quotes[dayIndex(_quotes.length)];
+  final q = _todayQuote();
   final fs = switch (c.size) { WSize.small => 17.0, WSize.medium => 24.0, WSize.large => 32.0 };
   return WShell(
     c: c,
@@ -881,7 +882,11 @@ const _ringColors = [Color(0xFFFF2D55), Color(0xFFA6FF00), Color(0xFF00E0FF)];
 Widget _fitness(WCtx c) {
   final day = app.store.map('fit')[dkey(DateTime.now())] as Map? ?? {};
   final g = app.store.map('fit.goals');
-  num v(String k) => day[k] as num? ?? 0;
+  // Real steps from the phone's step counter; move and active minutes are estimated from them.
+  final real = deviceSteps();
+  num v(String k) => real == null
+      ? (day[k] as num? ?? 0)
+      : switch (k) { 'steps' => real, 'move' => (real * 0.04).round(), 'active' => (real / 110).round(), _ => 0 };
   num goal(String k) => g[k] as num? ?? 1;
   final vals = [v('steps') / goal('steps'), v('move') / goal('move'), v('active') / goal('active')].map((e) => e.toDouble()).toList();
   final rings = Rings(c, vals, colors: _ringColors, stroke: c.sm ? 13 : (c.lg ? 22 : 15), gap: 3);
@@ -935,7 +940,12 @@ class _FitnessEditor extends StatelessWidget {
           }
 
           return Column(children: [
-            Section(title: 'Today', footer: 'Enter values from your watch or health app.', children: [
+            Section(
+                title: 'Today',
+                footer: deviceSteps() != null
+                    ? 'Steps are counted live by your phone (${deviceSteps()} today). Move and active minutes are estimated from them.'
+                    : 'Allow “Physical activity” in Info → Permissions to count steps automatically, or enter values here.',
+                children: [
               StepperRow('Steps', day['steps'] as num? ?? 0, (v) => set('steps', v), step: 500),
               StepperRow('Move (kcal)', day['move'] as num? ?? 0, (v) => set('move', v), step: 25),
               StepperRow('Active (min)', day['active'] as num? ?? 0, (v) => set('active', v), step: 5),
@@ -1234,7 +1244,7 @@ final lifestyleGlances = <String, Glance Function(WCtx)>{
     return Glance('Photo Frame', label: n == 0 ? 'Pick photos in the app' : '$n photos', icon: CupertinoIcons.photo_fill);
   },
   'quote': (c) {
-    final q = _quotes[dayIndex(_quotes.length)];
+    final q = _todayQuote();
     return Glance('“${q.$1}”', label: '— ${q.$2}', icon: CupertinoIcons.quote_bubble_fill);
   },
   'mood': (c) {
@@ -1257,7 +1267,7 @@ final lifestyleGlances = <String, Glance Function(WCtx)>{
   'fitness': (c) {
     final day = app.store.map('fit')[dkey(DateTime.now())] as Map? ?? {};
     final g = app.store.map('fit.goals');
-    final steps = (day['steps'] as num? ?? 0), goal = (g['steps'] as num? ?? 8000);
+    final steps = deviceSteps() ?? (day['steps'] as num? ?? 0), goal = (g['steps'] as num? ?? 8000);
     return Glance('${groupNum(steps)} steps', label: 'Move ${day['move'] ?? 0} kcal · Active ${day['active'] ?? 0} min',
         icon: CupertinoIcons.circle_grid_hex_fill, color: _ringColors.first, progress: steps / math.max(1, goal));
   },
@@ -1285,3 +1295,11 @@ final lifestyleGlances = <String, Glance Function(WCtx)>{
         icon: CupertinoIcons.moon_stars_fill, color: c.warm);
   },
 };
+/// Today's quote from ZenQuotes; the built-in list is only an offline fallback.
+(String, String) _todayQuote() {
+  final key = 'quote:${dkey(DateTime.now())}';
+  app.hub.ensure(key, const Duration(hours: 6), Api.quote);
+  final j = app.hub.get<Map<String, dynamic>>(key);
+  if (j != null && '${j['q']}'.isNotEmpty) return ('${j['q']}', '${j['a']}');
+  return _quotes[dayIndex(_quotes.length)];
+}

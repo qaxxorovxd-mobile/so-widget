@@ -7,11 +7,14 @@ import io.flutter.plugin.common.MethodChannel
 class MainActivity : FlutterActivity() {
     private var detachMedia: (() -> Unit)? = null
     private var detachHome: (() -> Unit)? = null
+    private var detachDevice: (() -> Unit)? = null
     override fun configureFlutterEngine(flutterEngine: FlutterEngine) {
         super.configureFlutterEngine(flutterEngine)
         detachMedia = SoMedia.attach(this, flutterEngine.dartExecutor.binaryMessenger, events = true)
         SoPermissions.attach(this, flutterEngine.dartExecutor.binaryMessenger)
         detachHome = SoHome.attach(applicationContext, flutterEngine.dartExecutor.binaryMessenger, listen = true)
+        detachDevice = SoDevices.attach(applicationContext, flutterEngine.dartExecutor.binaryMessenger)
+        SoDevices.updateAll(this)
         // Some phones (Xiaomi, Oppo…) unbind the listener after the app is killed; ask the system to rebind it.
         try {
             if (SoMedia.allowed(this) && android.os.Build.VERSION.SDK_INT >= 24) {
@@ -41,7 +44,10 @@ class MainActivity : FlutterActivity() {
                     val h = call.argument<Int>("h") ?: 170
                     val style = call.argument<String>("style")
                     Thread {
-                        val bytes = try { SoNowPlaying.preview(applicationContext, id, w, h, style) } catch (e: Exception) { null }
+                        val bytes = try {
+                            if (SoDevices.isDevice(id)) SoDevices.preview(applicationContext, id, w, h, style)
+                            else SoNowPlaying.preview(applicationContext, id, w, h, style)
+                        } catch (e: Exception) { null }
                         runOnUiThread { result.success(bytes) }
                     }.start()
                 }
@@ -62,6 +68,8 @@ class MainActivity : FlutterActivity() {
         detachMedia = null
         detachHome?.invoke()
         detachHome = null
+        detachDevice?.invoke()
+        detachDevice = null
         super.cleanUpFlutterEngine(flutterEngine)
     }
 }

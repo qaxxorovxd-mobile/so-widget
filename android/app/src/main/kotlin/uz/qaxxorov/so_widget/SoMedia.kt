@@ -168,7 +168,10 @@ class SoMediaListener : NotificationListenerService() {
         SoNowPlaying.updateAll(this)
     }
     private val screenOn = object : android.content.BroadcastReceiver() {
-        override fun onReceive(context: Context, intent: Intent) = SoNowPlaying.updateAll(context)
+        override fun onReceive(context: Context, intent: Intent) {
+            SoNowPlaying.updateAll(context)
+            SoDevices.updateAll(context)
+        }
     }
     private var screenRegistered = false
     private fun notifyChange() { handler.removeCallbacks(changed); handler.postDelayed(changed, 300) }
@@ -193,7 +196,14 @@ class SoMediaListener : NotificationListenerService() {
         } catch (_: SecurityException) {}
         if (!screenRegistered) {
             try {
-                registerReceiver(screenOn, android.content.IntentFilter(Intent.ACTION_SCREEN_ON))
+                registerReceiver(screenOn, android.content.IntentFilter().apply {
+                    addAction(Intent.ACTION_SCREEN_ON)
+                    addAction(Intent.ACTION_BATTERY_CHANGED)
+                    addAction(android.media.AudioManager.RINGER_MODE_CHANGED_ACTION)
+                    addAction(android.net.wifi.WifiManager.WIFI_STATE_CHANGED_ACTION)
+                    addAction("android.bluetooth.device.action.BATTERY_LEVEL_CHANGED")
+                    addAction(android.os.PowerManager.ACTION_POWER_SAVE_MODE_CHANGED)
+                })
                 screenRegistered = true
             } catch (_: Exception) {}
         }

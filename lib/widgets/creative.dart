@@ -566,7 +566,7 @@ const _words = [
 ];
 
 Widget _word(WCtx c) {
-  final w = _words[dayIndex(_words.length, 3)];
+  final w = _todayWord();
   return WShell(
     c: c,
     padding: EdgeInsets.all(c.lg ? 26 : (c.sm ? 16 : 20)),
@@ -1195,7 +1195,7 @@ final creativeGlances = <String, Glance Function(WCtx)>{
     return Glance(kDays[n.weekday - 1], label: '${n.day} ${kMonths[n.month - 1]} · daily photo', icon: CupertinoIcons.photo_on_rectangle);
   },
   'word': (c) {
-    final w = _words[dayIndex(_words.length, 3)];
+    final w = _todayWord();
     return Glance(w.$1, label: w.$3, icon: CupertinoIcons.textformat_abc);
   },
   'cards': (c) {
@@ -1214,3 +1214,14 @@ final creativeGlances = <String, Glance Function(WCtx)>{
     return Glance('${t['out'] ?? ''}', label: '${t['src'] ?? ''}', icon: CupertinoIcons.globe);
   },
 };
+/// Merriam-Webster's Word of the Day; the built-in list is only an offline fallback.
+(String, String, String, String) _todayWord() {
+  final key = 'wotd:${dkey(DateTime.now())}';
+  app.hub.ensure(key, const Duration(hours: 6), Api.wordOfDay);
+  final j = app.hub.get<Map<String, dynamic>>(key);
+  if (j != null && '${j['w']}'.isNotEmpty) {
+    final w = '${j['w']}';
+    return (w.isEmpty ? w : w[0].toUpperCase() + w.substring(1), '${j['pos']}', '${j['def']}', '${j['ex']}');
+  }
+  return _words[dayIndex(_words.length, 3)];
+}

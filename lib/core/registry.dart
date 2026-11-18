@@ -4,6 +4,7 @@ import 'package:material_ui/material_ui.dart';
 
 import '../ui/kit.dart';
 import '../widgets/creative.dart';
+import '../widgets/devices.dart';
 import '../widgets/digital.dart';
 import '../widgets/essential.dart';
 import '../widgets/lifestyle.dart';
@@ -15,6 +16,7 @@ import 'style.dart';
 enum WCat {
   essential('Essential', 'Everyday glanceables'),
   media('Media', 'Live music from any app'),
+  devices('Devices', 'Bluetooth, controls & storage'),
   productivity('Productivity', 'Get things done'),
   digital('Digital Life', 'Internet & tech'),
   lifestyle('Lifestyle', 'Personal rhythm'),
@@ -58,6 +60,7 @@ final List<WDef> allWidgets = [
   ...lifestyleWidgets,
   ...creativeWidgets,
   ...mediaWidgets,
+  ...devicesWidgets,
 ]..sort((a, b) => a.no.compareTo(b.no));
 
 final Map<String, WDef> widgetById = {for (final w in allWidgets) w.id: w};
@@ -88,10 +91,11 @@ final Map<String, Glance Function(WCtx c)> glances = {
   ...lifestyleGlances,
   ...creativeGlances,
   ...mediaGlances,
+  ...devicesGlances,
 };
 
 /// Widgets whose face draws itself natively at any size (live media).
-bool isAdaptive(String id) => id == 'nowplaying' || id.startsWith('m_');
+bool isAdaptive(String id) => id == 'nowplaying' || id.startsWith('m_') || id.startsWith('d_');
 
 /// How a widget is laid out for a real home-screen size (in dp).
 class RenderPlan {

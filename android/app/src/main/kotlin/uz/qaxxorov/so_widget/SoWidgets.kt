@@ -87,6 +87,10 @@ object SoHome {
 
     fun render(context: Context, mgr: AppWidgetManager, wid: Int, prefs: SharedPreferences, slot: String) {
         val id = prefs.getString(instKey(wid), null)
+        if (SoDevices.isDevice(id)) {
+            SoDevices.render(context, mgr, wid, slot, id!!)
+            return
+        }
         if (SoNowPlaying.isMedia(id)) {
             SoNowPlaying.render(context, mgr, wid, slot, id!!)
             return
@@ -150,7 +154,8 @@ abstract class SoBaseWidget(private val slot: String) : HomeWidgetProvider() {
         // Resized on the home screen: media widgets redraw natively right now; the others are
         // redrawn by Flutter at the new size (app engine if running, otherwise the background job).
         SoHome.render(context, appWidgetManager, appWidgetId, HomeWidgetPlugin.getData(context), slot)
-        if (!SoNowPlaying.isMedia(HomeWidgetPlugin.getData(context).getString(SoHome.instKey(appWidgetId), null))) {
+        val rid = HomeWidgetPlugin.getData(context).getString(SoHome.instKey(appWidgetId), null)
+        if (!SoNowPlaying.isMedia(rid) && !SoDevices.isDevice(rid)) {
             if (SoHome.resizeListeners.isNotEmpty()) {
                 SoHome.resizeListeners.toList().forEach { it() }
             } else {

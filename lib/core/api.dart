@@ -50,35 +50,122 @@ class Api {
         '&ids=${ids.join(',')}&sparkline=true&price_change_percentage=24h',
       );
 
-  static Future<dynamic> currency(String base) =>
-      json('https://open.er-api.com/v6/latest/$base');
-
-  static Future<List<Map<String, dynamic>>> stocks(List<String> symbols) async {
-    final s = symbols.map((e) => '${e.toLowerCase()}.us').join('+');
-    final r = await http
-        .get(Uri.parse('https://stooq.com/q/l/?s=$s&f=sd2t2ohlcv&h&e=csv'), headers: _ua)
-        .timeout(const Duration(seconds: 15));
-    if (r.statusCode >= 400) throw Exception('HTTP ${r.statusCode}');
-    final lines = const LineSplitter().convert(r.body).skip(1);
-    final out = <Map<String, dynamic>>[];
-    for (final l in lines) {
-      final p = l.split(',');
-      if (p.length < 7) continue;
-      final open = double.tryParse(p[3]);
-      final close = double.tryParse(p[6]);
-      if (open == null || close == null) continue;
-      out.add({
-        's': p[0].replaceAll('.US', '').replaceAll('.us', ''),
-        'o': open,
-        'h': double.tryParse(p[4]) ?? close,
-        'l': double.tryParse(p[5]) ?? close,
-        'c': close,
+  /// Exchange rates for [base]. Uses the Central Bank of Uzbekistan's official daily rates
+  /// (what Uzbek banks and Google show for UZS), falling back to a daily market feed.
+  static Future<dynamic> currency(String base) async {
+    final b = base.toUpperCase();
+    final rates = <String, double>{};
+    var source = '';
+    var date = '';
+    try {
+      final list = await json('https://cbu.uz/uz/arkhiv-kursov-valyut/json/') as List;
+      // UZS for one unit of each currency.
+      final uzsPer = <String, double>{'UZS': 1};
+      for (final e in list) {
+        final ccy = '${e['Ccy']}'.toUpperCase();
+        final rate = double.tryParse('${e['Rate']}'.replaceAll(',', '.'));
+        final nominal = double.tryParse('${e['Nominal']}') ?? 1;
+        if (rate != null && nominal > 0) uzsPer[ccy] = rate / nominal;
+        if (date.isEmpty) date = '${e['Date']}';
+      }
+      final baseUzs = uzsPer[b];
+      if (baseUzs != null) {
+        uzsPer.forEach((k, v) => rates[k] = baseUzs / v);
+        source = 'Central Bank of Uzbekistan';
+      }
+    } catch (_) {}
+    try {
+      // Fills currencies the CBU doesn't list (and everything if the CBU is unreachable).
+      final j = await json('https://cdn.jsdelivr.net/npm/@fawazahmed0/currency-api@latest/v1/currencies/${b.toLowerCase()}.json');
+      final m = Map<String, dynamic>.from(j[b.toLowerCase()] as Map);
+      m.forEach((k, v) {
+        if (v is num) rates.putIfAbsent(k.toUpperCase(), () => v.toDouble());
       });
-    }
-    if (out.isEmpty) throw Exception('No quotes');
-    return out;
+      if (source.isEmpty) {
+        source = 'Market rates';
+        date = '${j['date']}';
+      }
+    } catch (_) {}
+    if (rates.isEmpty) throw Exception('No rates');
+    // Shown as "dd.MM.yyyy" by the CBU; keep the old field the widget reads.
+    return {'rates': rates, 'source': source, 'date': date, 'time_last_update_utc': 'Updated $date'};
   }
 
+  /// Today's quote (ZenQuotes, no key).
+  static Future<dynamic> quote() async {
+    final j = await json('https://zenquotes.io/api/today') as List;
+    final q = Map<String, dynamic>.from(j.first as Map);
+    return {'q': '${q['q']}'.trim(), 'a': '${q['a']}'.trim()};
+  }
+
+  /// Merriam-Webster's Word of the Day (RSS).
+  static Future<dynamic> wordOfDay() async {
+    final r = await http
+        .get(Uri.parse('https://www.merriam-webster.com/wotd/feed/rss2'), headers: _ua)
+        .timeout(const Duration(seconds: 15));
+    if (r.statusCode >= 400) throw Exception('HTTP ${r.statusCode}');
+    final x = utf8.decode(r.bodyBytes);
+    final item = x.substring(x.indexOf('<item>'));
+    String strip(String s) => s
+        .replaceAll(RegExp(r'<[^>]+>'), '')
+        .replaceAll('&nbsp;', ' ')
+        .replaceAll('&#149;', '•')
+        .replaceAll('&amp;', '&')
+        .replaceAll('&quot;', '"')
+        .replaceAll(RegExp(r'\s+'), ' ')
+        .trim();
+    final word = RegExp(r'<title><!\[CDATA\[(.*?)\]\]></title>').firstMatch(item)?.group(1) ?? '';
+    final pos = RegExp(r'<em>(noun|verb|adjective|adverb|pronoun|preposition|conjunction|interjection|phrase)</em>')
+            .firstMatch(item)
+            ?.group(1) ??
+        '';
+    final pron = RegExp(r'\\([^\\]{2,40})\\').firstMatch(item)?.group(1) ?? '';
+    // Paragraphs after the "noun<br />" line: first is the meaning, the one starting with "//" is an example.
+    final paras = RegExp(r'<p>(.*?)</p>', dotAll: true).allMatches(item).map((m) => strip(m.group(1)!)).toList();
+    // The headline paragraph wraps the meaning: "word • \pron\ • noun <p>Meaning…".
+    var meaning = '';
+    final head = paras.firstWhere((p) => pos.isNotEmpty && p.contains('• $pos'), orElse: () => '');
+    if (head.isNotEmpty) {
+      meaning = head.substring(head.indexOf('• $pos') + pos.length + 2).trim();
+    }
+    if (meaning.isEmpty) {
+      meaning = paras.firstWhere(
+        (p) => p.length > 20 && !p.startsWith('//') && !p.contains('Word of the Day') && !p.startsWith('Examples'),
+        orElse: () => '',
+      );
+    }
+    final example = paras.firstWhere((p) => p.startsWith('//'), orElse: () => '').replaceFirst('//', '').trim();
+    if (word.isEmpty) throw Exception('No word');
+    return {'w': word, 'pos': pos, 'pron': pron, 'def': meaning, 'ex': example};
+  }
+
+  /// Live US stock quotes from Yahoo Finance (keyless). Change is vs. the previous close, like Google.
+  static Future<List<Map<String, dynamic>>> stocks(List<String> symbols) async {
+    final out = <Map<String, dynamic>>[];
+    await Future.wait(symbols.map((s) async {
+      try {
+        final j = await json(
+          'https://query1.finance.yahoo.com/v8/finance/chart/${Uri.encodeComponent(s.toUpperCase())}?range=1d&interval=15m',
+          headers: {'User-Agent': 'Mozilla/5.0 SoWidget/1.0'},
+        );
+        final m = Map<String, dynamic>.from(j['chart']['result'][0]['meta'] as Map);
+        final price = (m['regularMarketPrice'] as num?)?.toDouble();
+        final prev = ((m['chartPreviousClose'] ?? m['previousClose']) as num?)?.toDouble();
+        if (price == null || prev == null || prev == 0) return;
+        out.add({
+          's': s.toUpperCase(),
+          'o': prev,
+          'h': (m['regularMarketDayHigh'] as num?)?.toDouble() ?? price,
+          'l': (m['regularMarketDayLow'] as num?)?.toDouble() ?? price,
+          'c': price,
+        });
+      } catch (_) {}
+    }));
+    if (out.isEmpty) throw Exception('No quotes');
+    // Keep the user's order.
+    out.sort((a, b) => symbols.indexWhere((x) => x.toUpperCase() == a['s']).compareTo(symbols.indexWhere((x) => x.toUpperCase() == b['s'])));
+    return out;
+  }
   static Future<dynamic> github(String user) async {
     final cal = await json('https://github-contributions-api.jogruber.de/v4/$user?y=last');
     Map<String, dynamic> profile = {};
@@ -97,16 +184,25 @@ class Api {
     };
   }
 
+  /// Latest release per repo from GitHub's Atom feeds (no API key, no rate limit).
   static Future<List<Map<String, dynamic>>> releases(List<String> repos) async {
     final out = <Map<String, dynamic>>[];
     await Future.wait(repos.map((r) async {
-      try {
-        final j = await json('https://api.github.com/repos/$r/releases/latest');
-        out.add({'r': r, 'tag': j['tag_name'] ?? j['name'], 'at': j['published_at']});
-      } catch (_) {
+      for (final feed in ['releases', 'tags']) {
         try {
-          final t = await json('https://api.github.com/repos/$r/tags?per_page=1') as List;
-          if (t.isNotEmpty) out.add({'r': r, 'tag': t.first['name'], 'at': null});
+          final res = await http
+              .get(Uri.parse('https://github.com/$r/$feed.atom'), headers: _ua)
+              .timeout(const Duration(seconds: 15));
+          if (res.statusCode >= 400) continue;
+          final x = utf8.decode(res.bodyBytes);
+          final i = x.indexOf('<entry>');
+          if (i < 0) continue;
+          final e = x.substring(i);
+          final title = RegExp(r'<title>(.*?)</title>', dotAll: true).firstMatch(e)?.group(1)?.trim();
+          final at = RegExp(r'<updated>(.*?)</updated>').firstMatch(e)?.group(1);
+          if (title == null || title.isEmpty) continue;
+          out.add({'r': r, 'tag': title, 'at': at});
+          return;
         } catch (_) {}
       }
     }));

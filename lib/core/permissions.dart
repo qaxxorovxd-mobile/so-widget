@@ -20,13 +20,19 @@ class Perms extends ChangeNotifier {
 
   /// Phone brand has its own "autostart" switch (Xiaomi, Oppo, Vivo, Huawei…).
   bool hasAutostart = false;
+
+  /// Bluetooth devices list + one-tap connect (Android 12+ runtime permission).
+  bool bluetooth = true;
+
+  /// Real step counter (Android 10+ runtime permission).
+  bool activity = true;
   String brand = '';
 
   /// Autostart state can't be read, so remember that the user opened it.
   bool get autostartDone => app.store.flag('perm.autostart');
 
-  bool get allGranted => !supported || (media && battery && (!hasAutostart || autostartDone));
-  int get missing => [!media, !battery, hasAutostart && !autostartDone].where((e) => e).length;
+  bool get allGranted => !supported || (media && battery && bluetooth && activity && (!hasAutostart || autostartDone));
+  int get missing => [!media, !battery, !bluetooth, !activity, hasAutostart && !autostartDone].where((e) => e).length;
 
   Future<void> refresh() async {
     if (!supported) return;
@@ -35,6 +41,8 @@ class Perms extends ChangeNotifier {
       media = m['media'] == true;
       battery = m['battery'] == true;
       hasAutostart = m['autostart'] == true;
+      bluetooth = m['bluetooth'] != false;
+      activity = m['activity'] != false;
       brand = '${m['brand'] ?? ''}';
       loaded = true;
       notifyListeners();

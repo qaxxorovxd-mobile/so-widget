@@ -1,5 +1,6 @@
 package uz.qaxxorov.so_widget
 
+import android.Manifest
 import android.app.Activity
 import android.appwidget.AppWidgetManager
 import android.content.ComponentName
@@ -42,6 +43,8 @@ object SoPermissions {
             "autostart" to hasAutostart(a),
             "brand" to Build.MANUFACTURER,
             "pin" to pin,
+            "bluetooth" to SoDevices.hasBtPermission(a),
+            "activity" to SoDevices.hasActivityPermission(a),
         )
     }
 
@@ -74,6 +77,18 @@ object SoPermissions {
                     result.success(ok || appDetails(a))
                 }
                 "app" -> result.success(appDetails(a))
+                "bluetooth" -> {
+                    if (Build.VERSION.SDK_INT >= 31 && !SoDevices.hasBtPermission(a)) {
+                        a.requestPermissions(arrayOf(Manifest.permission.BLUETOOTH_CONNECT), 4711)
+                    }
+                    result.success(true)
+                }
+                "activity" -> {
+                    if (Build.VERSION.SDK_INT >= 29 && !SoDevices.hasActivityPermission(a)) {
+                        a.requestPermissions(arrayOf(Manifest.permission.ACTIVITY_RECOGNITION), 4712)
+                    }
+                    result.success(true)
+                }
                 else -> result.notImplemented()
             }
         }

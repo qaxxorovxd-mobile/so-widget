@@ -118,10 +118,10 @@ void main() {
     seedAll(app.store);
   });
 
-  test('registry has 56 unique widgets numbered 1..56', () {
-    expect(allWidgets.length, 56);
-    expect(allWidgets.map((w) => w.id).toSet().length, 56);
-    expect(allWidgets.map((w) => w.no).toList(), List.generate(56, (i) => i + 1));
+  test('registry has 60 unique widgets numbered 1..60', () {
+    expect(allWidgets.length, 60);
+    expect(allWidgets.map((w) => w.id).toSet().length, 60);
+    expect(allWidgets.map((w) => w.no).toList(), List.generate(60, (i) => i + 1));
   });
 
   for (final withData in [false, true]) {

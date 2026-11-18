@@ -5,6 +5,7 @@ import 'package:cupertino_ui/cupertino_ui.dart';
 import 'package:material_ui/material_ui.dart';
 
 import '../core/api.dart';
+import '../core/device.dart';
 import '../core/registry.dart';
 import '../core/state.dart';
 import '../core/style.dart';
@@ -28,7 +29,6 @@ void seedDigital(Store s) {
   s.seed('repos', ['flutter/flutter', 'dart-lang/sdk', 'microsoft/vscode', 'vercel/next.js', 'denoland/deno']);
 }
 
-final _started = DateTime.now();
 
 final digitalWidgets = <WDef>[
   WDef(
@@ -147,22 +147,26 @@ Color _chg(WCtx c, num v) => v >= 0 ? c.pos : c.neg;
 // ───────────────────────── 21 System Pulse ─────────────────────────
 
 Widget _pulse(WCtx c) {
-  final rss = ProcessInfo.currentRss / 1024 / 1024;
-  final cores = Platform.numberOfProcessors;
-  final net = app.hub.get<Map<String, dynamic>>('net');
-  final ping = (net?['ping'] as num?)?.toInt();
+  final d = deviceStats();
+  final cores = (d?['cores'] as num?)?.toInt() ?? Platform.numberOfProcessors;
+  final ramT = (d?['ramTotal'] as num?)?.toDouble() ?? 0, ramF = (d?['ramFree'] as num?)?.toDouble() ?? 0;
+  final stT = (d?['storageTotal'] as num?)?.toDouble() ?? 0, stF = (d?['storageFree'] as num?)?.toDouble() ?? 0;
+  final ram = ramT > 0 ? 1 - ramF / ramT : 0.0;
+  final disk = stT > 0 ? 1 - stF / stT : 0.0;
   final bat = app.power.available ? app.power.level / 100 : 0.0;
-  final memV = (rss / 512).clamp(0.0, 1.0);
-  final pingV = ping == null ? 0.0 : (1 - (ping / 400)).clamp(0.05, 1.0);
-  final up = DateTime.now().difference(_started);
+  final temp = (d?['temp'] as num?)?.toDouble();
+  final upMin = ((d?['uptime'] as num?)?.toInt() ?? 0) ~/ 60000;
+  final up = '${upMin ~/ 1440}d ${(upMin % 1440) ~/ 60}h';
   final cols = [c.fg, c.pos, c.warm];
   Widget stat(String k, String v, Color dot) => Row(children: [
         Container(width: 7, height: 7, decoration: BoxDecoration(color: dot, shape: BoxShape.circle)),
         const SizedBox(width: 6),
-        Expanded(child: Text(k, style: c.t(13, dim: true))),
+        Expanded(child: Text(k, maxLines: 1, overflow: TextOverflow.ellipsis, style: c.t(13, dim: true))),
         Text(v, style: c.t(14)),
       ]);
-  final rings = Rings(c, [memV, bat, pingV], colors: cols, stroke: c.sm ? 9 : 11, gap: 3);
+  final rings = Rings(c, [ram, disk, bat], colors: cols, stroke: c.sm ? 9 : 11, gap: 3);
+  final ramText = ramT > 0 ? '${(ram * 100).round()}%' : '—';
+  final diskText = stT > 0 ? '${(disk * 100).round()}%' : '—';
   if (c.sm) {
     return WShell(
       c: c,
@@ -170,9 +174,9 @@ Widget _pulse(WCtx c) {
         Expanded(child: rings),
         const SizedBox(height: 8),
         Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-          Text('${rss.round()}MB', style: c.t(12)),
-          Text('${(bat * 100).round()}%', style: c.t(12, c: c.pos)),
-          Text(ping == null ? '—' : '${ping}ms', style: c.t(12, c: c.warm)),
+          Text('RAM $ramText', style: c.t(11.5)),
+          Text(diskText, style: c.t(11.5, c: c.pos)),
+          Text('${(bat * 100).round()}%', style: c.t(11.5, c: c.warm)),
         ]),
       ]),
     );
@@ -182,33 +186,32 @@ Widget _pulse(WCtx c) {
     padding: EdgeInsets.all(c.lg ? 22 : 18),
     child: c.md
         ? Row(children: [
-            rings,
+            ConstrainedBox(constraints: BoxConstraints(maxWidth: c.dims.width * 0.4), child: rings),
             const SizedBox(width: 18),
             Expanded(
               child: Column(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
-                stat('App memory', '${rss.round()} MB', cols[0]),
-                stat('Battery', app.power.available ? '${app.power.level}%' : '—', cols[1]),
-                stat('Latency', ping == null ? '—' : '$ping ms', cols[2]),
-                stat('Cores', '$cores', c.line),
+                stat('Memory', ramT > 0 ? '${gbText(ramT - ramF)} / ${gbText(ramT)}' : '—', cols[0]),
+                stat('Storage', stT > 0 ? '${gbText(stF)} free' : '—', cols[1]),
+                stat('Battery', app.power.available ? '${app.power.level}%${temp == null ? '' : ' · ${temp.round()}°C'}' : '—', cols[2]),
+                stat('Cores · uptime', '$cores · $up', c.line),
               ]),
             ),
           ])
         : Column(children: [
-            WHeader(c, CupertinoIcons.waveform_path_ecg, 'System Pulse', trailing: Platform.operatingSystem),
+            WHeader(c, CupertinoIcons.waveform_path_ecg, 'System Pulse', trailing: '${d?['model'] ?? Platform.operatingSystem}'),
             const SizedBox(height: 14),
             Expanded(child: rings),
             const SizedBox(height: 16),
-            stat('App memory', '${rss.round()} MB', cols[0]),
+            stat('Memory used', ramT > 0 ? '$ramText · ${gbText(ramT - ramF)} of ${gbText(ramT)}' : '—', cols[0]),
             const SizedBox(height: 6),
-            stat('Battery', app.power.available ? '${app.power.level}%' : '—', cols[1]),
+            stat('Storage used', stT > 0 ? '$diskText · ${gbText(stF)} free' : '—', cols[1]),
             const SizedBox(height: 6),
-            stat('Latency', ping == null ? '—' : '$ping ms', cols[2]),
+            stat('Battery', app.power.available ? '${app.power.level}%${temp == null ? '' : ' · ${temp.round()}°C'}' : '—', cols[2]),
             const SizedBox(height: 6),
-            stat('CPU cores · uptime', '$cores · ${dur(up, short: true)}', c.line),
+            stat('CPU cores · uptime', '$cores · $up', c.line),
           ]),
   );
 }
-
 class _PulseEditor extends StatelessWidget {
   const _PulseEditor();
 
@@ -216,8 +219,7 @@ class _PulseEditor extends StatelessWidget {
   Widget build(BuildContext context) => Column(children: [
         Section(
           title: 'Device',
-          footer: 'Mobile systems don’t let apps read total CPU and RAM usage, so System Pulse shows what is measurable: '
-              'this app’s memory, CPU cores, battery and network latency.',
+          footer: 'Real values from your phone: memory, storage, battery temperature, CPU cores and uptime. Updated every minute.',
           children: [
             RowItem(title: 'Platform', value: Platform.operatingSystem),
             RowItem(title: 'Version', subtitle: Platform.operatingSystemVersion),
@@ -640,7 +642,7 @@ Widget _currency(WCtx c) {
   final base = app.store.str('fx.base', 'USD');
   final pairs = app.store.strs('fx.pairs');
   final key = 'fx:$base';
-  app.hub.ensure(key, const Duration(hours: 3), () => Api.currency(base));
+  app.hub.ensure(key, const Duration(hours: 1), () => Api.currency(base));
   final j = app.hub.get<Map<String, dynamic>>(key);
   if (j == null) return _loading(c, CupertinoIcons.money_dollar_circle, 'Currency', key);
   final rates = Map<String, dynamic>.from(j['rates'] as Map? ?? {});
@@ -971,10 +973,12 @@ Glance _upGlance(List<Map<String, dynamic>> res, int expected, String what, Icon
 
 final digitalGlances = <String, Glance Function(WCtx)>{
   'pulse': (c) {
-    final net = app.hub.get<Map<String, dynamic>>('net');
-    return Glance('${(ProcessInfo.currentRss / 1024 / 1024).round()} MB',
-        label: 'App memory · ${Platform.numberOfProcessors} cores${net == null ? '' : ' · ${net['ping']} ms'}',
-        icon: CupertinoIcons.waveform_path_ecg);
+    final d = deviceStats();
+    final rt = (d?['ramTotal'] as num?)?.toDouble() ?? 0, rf = (d?['ramFree'] as num?)?.toDouble() ?? 0;
+    final st = (d?['storageTotal'] as num?)?.toDouble() ?? 0, sf = (d?['storageFree'] as num?)?.toDouble() ?? 0;
+    return Glance(rt > 0 ? 'RAM ${((1 - rf / rt) * 100).round()}%' : 'System Pulse',
+        label: st > 0 ? '${gbText(sf)} free · battery ${app.power.level}%' : 'Reading your phone…',
+        icon: CupertinoIcons.waveform_path_ecg, progress: rt > 0 ? 1 - rf / rt : null);
   },
   'network': (c) {
     final net = app.hub.get<Map<String, dynamic>>('net');

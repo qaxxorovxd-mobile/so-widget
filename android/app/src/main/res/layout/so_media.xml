@@ -12,6 +12,31 @@
         android:contentDescription="@string/so_widget_desc"
         android:scaleType="fitXY" />
 
+    <!-- Edge taps: left = previous, right = next (for designs without skip buttons). -->
+    <FrameLayout
+        android:id="@+id/np_c_left"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone">
+        <FrameLayout
+            android:id="@+id/np_left"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:contentDescription="Previous" />
+    </FrameLayout>
+
+    <FrameLayout
+        android:id="@+id/np_c_right"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone">
+        <FrameLayout
+            android:id="@+id/np_right"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:contentDescription="Next" />
+    </FrameLayout>
+
     <FrameLayout
         android:id="@+id/np_c_prev"
         android:layout_width="match_parent"

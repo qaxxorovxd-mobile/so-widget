@@ -8,7 +8,7 @@ import '../ui/forms.dart';
 import 'permissions.dart';
 import '../widgets/productivity.dart' show openUrl;
 
-const kVersion = '1.0.0';
+const kVersion = '1.1.0';
 
 class InfoPage extends StatelessWidget {
   const InfoPage({super.key});
@@ -116,8 +116,11 @@ class InfoPage extends StatelessWidget {
           children: [
             RowItem(title: 'Weather & air quality', value: 'Open-Meteo'),
             RowItem(title: 'Crypto', value: 'CoinGecko'),
-            RowItem(title: 'Currency', value: 'ExchangeRate-API'),
-            RowItem(title: 'Stocks', value: 'Stooq'),
+            RowItem(title: 'Currency', value: 'Central Bank of Uzbekistan'),
+            RowItem(title: 'Stocks', value: 'Yahoo Finance'),
+            RowItem(title: 'Quote of the day', value: 'ZenQuotes'),
+            RowItem(title: 'Word of the day', value: 'Merriam-Webster'),
+            RowItem(title: 'Releases', value: 'GitHub'),
             RowItem(title: 'Prayer times', value: 'Aladhan'),
             RowItem(title: 'Earthquakes', value: 'USGS'),
             RowItem(title: 'ISS position', value: 'WhereTheISS'),

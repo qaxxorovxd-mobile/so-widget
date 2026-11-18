@@ -110,6 +110,28 @@ class _PermissionsPageState extends State<PermissionsPage> with WidgetsBindingOb
                     ),
                   ],
                 ),
+                Section(
+                  footer: 'Bluetooth lists your earbuds, watch and speakers with their battery, and connects them in one tap. '
+                      'Physical activity lets Fitness Rings read the phone’s real step counter.',
+                  children: [
+                    _PermRow(
+                      icon: CupertinoIcons.bluetooth,
+                      color: K.blue,
+                      title: 'Bluetooth devices',
+                      subtitle: 'Bluetooth, Batteries and Controls widgets.',
+                      granted: perms.bluetooth,
+                      onTap: () => perms.request('bluetooth'),
+                    ),
+                    _PermRow(
+                      icon: CupertinoIcons.flame_fill,
+                      color: const Color(0xFFFF2D55),
+                      title: 'Physical activity',
+                      subtitle: 'Real steps for Fitness Rings.',
+                      granted: perms.activity,
+                      onTap: () => perms.request('activity'),
+                    ),
+                  ],
+                ),
                 if (perms.hasAutostart)
                   Section(
                     footer: 'Turn on the switch for So Widget on the screen that opens. ${perms.brand} stops apps without it.',
